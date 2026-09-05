@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* 
+  Tailwind v4 Configuration 
+  We define our luxury palette right here instead of tailwind.config.ts
+*/
+@theme {
+  --color-luxury-paper: #F5F3EC;
+  --color-luxury-burgundy: #5A1217;
+  --color-luxury-charcoal: #111111;
+  --color-luxury-gold: #C5A059;
+  --color-luxury-sand: #E5D8C1;
+  --color-luxury-emerald: #0E3A2F;
+}
+
+@layer base {
+  body {
+    @apply bg-luxury-charcoal text-luxury-paper antialiased overflow-x-hidden;
+  }
+  
+  /* Subtle custom text selection */
+  ::selection {
+    @apply bg-luxury-gold text-luxury-charcoal;
+  }
+
+  /* Hide default browser scrollbar for a seamless app-like feel */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
