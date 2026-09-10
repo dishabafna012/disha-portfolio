@@ -29,9 +29,12 @@ export default function Navigation() {
         scrolled ? "py-4 bg-luxury-paper/80 backdrop-blur-md border-b border-luxury-gold/20" : ""
       )}
     >
-      {/* BULLETPROOF: Using <a> instead of <Link> for clean animation memory wiping */}
-      <a href="/" data-cursor="HOME" className="font-serif text-3xl tracking-widest text-luxury-burgundy uppercase z-50">
-        DB.
+      <a href="/" data-cursor="HOME" className="relative z-50 flex items-center">
+        <img 
+          src="/logo.png" 
+          alt="Disha Bafna" 
+          className="h-14 md:h-20 w-auto object-contain" 
+        />
       </a>
 
       <nav className="flex space-x-8">
