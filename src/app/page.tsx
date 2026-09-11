@@ -9,16 +9,9 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// ------------------------------------------------------------------------
-// STRICT HIERARCHY ARRAY:
-// 1. Diamonds (Tiny, massive quantity)
-// 2. Gems (Very Small, massive quantity)
-// 3. Leaves (Small, medium quantity)
-// 4. Flowers (Medium, low quantity)
-// 5. Clusters (Largest, only 2)
-// ------------------------------------------------------------------------
+// STRICT HIERARCHY ARRAY (Matches both Hero and Interactive Assembly sections)
 const explodedParts = [
-  // 1. DIAMONDS (Scale: 0.03 - 0.06)
+  // 1. DIAMONDS (Tiny, massive quantity)
   { src: "/part-diamond.png", x: -700, y: -450, rot: 35, scale: 0.04, blur: 4, zIndex: 10, blend: "normal" },
   { src: "/part-diamond.png", x: 600, y: -350, rot: -45, scale: 0.06, blur: 2, zIndex: 15, blend: "normal" },
   { src: "/part-diamond.png", x: -500, y: 400, rot: 110, scale: 0.03, blur: 8, zIndex: 20, blend: "normal" },
@@ -34,7 +27,7 @@ const explodedParts = [
   { src: "/part-diamond.png", x: -800, y: -100, rot: 55, scale: 0.06, blur: 8, zIndex: 20, blend: "normal" },
   { src: "/part-diamond.png", x: 800, y: -50, rot: -65, scale: 0.04, blur: 3, zIndex: 25, blend: "normal" },
 
-  // 2. GEMS (Scale: 0.06 - 0.1)
+  // 2. GEMS (Very Small, large quantity)
   { src: "/part-gem.png", x: -550, y: -300, rot: 15, scale: 0.08, blur: 5, zIndex: 40, blend: "normal" },
   { src: "/part-gem.png", x: 450, y: 200, rot: -60, scale: 0.09, blur: 2, zIndex: 45, blend: "normal" },
   { src: "/part-gem.png", x: -350, y: 350, rot: 80, scale: 0.07, blur: 8, zIndex: 50, blend: "normal" },
@@ -46,19 +39,19 @@ const explodedParts = [
   { src: "/part-gem.png", x: -750, y: 50, rot: 115, scale: 0.06, blur: 5, zIndex: 60, blend: "normal" },
   { src: "/part-gem.png", x: 750, y: -150, rot: -85, scale: 0.08, blur: 4, zIndex: 45, blend: "normal" },
 
-  // 3. LEAVES (Scale: 0.12 - 0.18)
+  // 3. LEAVES (Small, medium quantity)
   { src: "/part-leaf.png", x: 500, y: 350, rot: -30, scale: 0.15, blur: 3, zIndex: 60, blend: "normal" },
   { src: "/part-leaf.png", x: -450, y: -200, rot: 60, scale: 0.18, blur: 6, zIndex: 65, blend: "normal" },
   { src: "/part-leaf.png", x: -300, y: 250, rot: 15, scale: 0.12, blur: 1, zIndex: 70, blend: "normal" },
   { src: "/part-leaf.png", x: 250, y: -300, rot: -75, scale: 0.16, blur: 5, zIndex: 75, blend: "normal" },
   { src: "/part-leaf.png", x: -400, y: 400, rot: 45, scale: 0.14, blur: 4, zIndex: 60, blend: "normal" },
 
-  // 4. FLOWERS (Scale: 0.2 - 0.25)
+  // 4. FLOWERS (Medium, low quantity)
   { src: "/part-flower.png", x: -350, y: -300, rot: -15, scale: 0.22, blur: 4, zIndex: 80, blend: "normal" },
   { src: "/part-flower.png", x: 350, y: 200, rot: 40, scale: 0.2, blur: 1, zIndex: 85, blend: "normal" },
   { src: "/part-flower.png", x: -250, y: 300, rot: 105, scale: 0.25, blur: 6, zIndex: 80, blend: "normal" },
 
-  // 5. CLUSTERS (Scale: 0.35 - 0.4)
+  // 5. CLUSTERS (Largest, only 2)
   { src: "/part-cluster.png", x: -200, y: 350, rot: -10, scale: 0.4, blur: 5, zIndex: 90, blend: "normal" },
   { src: "/part-cluster.png", x: 300, y: -250, rot: 25, scale: 0.35, blur: 2, zIndex: 95, blend: "normal" }
 ];
@@ -71,6 +64,11 @@ export default function Home() {
   const geoRingRef = useRef<SVGSVGElement>(null);
   const lightRef = useRef<HTMLDivElement>(null);
   const jewelleryRef = useRef<HTMLDivElement>(null);
+  
+  // NEW REFS for Hero Assembly
+  const heroPartsRef = useRef<(HTMLImageElement | null)[]>([]);
+  const heroFinalPieceRef = useRef<HTMLImageElement>(null);
+  
   const nameRef = useRef<HTMLHeadingElement>(null);
   const titleRef = useRef<HTMLParagraphElement>(null);
   const quoteRef = useRef<HTMLParagraphElement>(null);
@@ -92,22 +90,50 @@ export default function Home() {
     if (!containerRef.current) return;
     const ctx = gsap.context(() => {
       
-      gsap.to(transitionRef.current, {
-        clipPath: "circle(0% at 50% 50%)",
-        duration: 1.5,
-        ease: "power4.inOut",
-        delay: 0.2
+      // Setup Initial Scatter BEFORE the timeline starts so it's ready instantly
+      heroPartsRef.current.forEach((part, i) => {
+        if (!part || !explodedParts[i]) return;
+        gsap.set(part, {
+          x: explodedParts[i].x * 1.5, 
+          y: explodedParts[i].y * 1.5,
+          rotation: explodedParts[i].rot,
+          scale: explodedParts[i].scale * 1.2,
+          filter: `blur(${explodedParts[i].blur + 2}px)`,
+          opacity: 0
+        });
       });
 
-      const tl = gsap.timeline({ delay: 0.5 });
+      // No delay! Start immediately.
+      const tl = gsap.timeline(); 
       
-      tl.to(tinyLogoRef.current, { opacity: 1, duration: 1, ease: "power2.inOut" })
-        .to(geoRingRef.current, { opacity: 0.15, scale: 1, rotation: 180, duration: 1.5, ease: "power2.out" }, "-=0.5")
-        .to(lightRef.current, { opacity: 0.5, duration: 1.5, ease: "power2.inOut" }, "-=1")
-        .to(jewelleryRef.current, { opacity: 1, scale: 1, duration: 1.5, ease: "power3.out" }, "-=1")
-        .to([nameRef.current, titleRef.current], { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" }, "-=0.8")
-        .to(quoteRef.current, { opacity: 1, duration: 1.5, ease: "power2.inOut" }, "-=0.5")
-        .to(ctaRef.current, { opacity: 1, duration: 1 }, "-=1");
+      // 1. Reveal the screen quickly
+      tl.to(transitionRef.current, {
+        clipPath: "circle(0% at 50% 50%)",
+        duration: 0.8,
+        ease: "power4.inOut"
+      })
+      // 2. Instantly fade in the scattered parts and background UI
+      .to(heroPartsRef.current, { opacity: 1, duration: 0.5, stagger: 0.01 }, "-=0.4")
+      .to(tinyLogoRef.current, { opacity: 1, duration: 1, ease: "power2.inOut" }, "-=0.5")
+      .to(lightRef.current, { opacity: 0.5, duration: 1.5, ease: "power2.inOut" }, "-=1")
+      // 3. Magically snap the pieces together FAST
+      .to(heroPartsRef.current, {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: (i) => explodedParts[i].scale * 0.45,
+        filter: "blur(0px)",
+        stagger: 0.01,
+        duration: 2,
+        ease: "power3.inOut"
+      }, "-=0.2")
+      // 4. Show final piece and bring in the text while the snap happens
+      .to(heroFinalPieceRef.current, { opacity: 1, duration: 0.5 }, "-=0.5")
+      .to(heroPartsRef.current, { opacity: 0, duration: 0.5 }, "<")
+      .to(geoRingRef.current, { opacity: 0.15, scale: 1, rotation: 180, duration: 1.5, ease: "power2.out" }, "-=1.5")
+      .to([nameRef.current, titleRef.current], { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" }, "-=1.5")
+      .to(quoteRef.current, { opacity: 1, duration: 1.5, ease: "power2.inOut" }, "-=0.8")
+      .to(ctaRef.current, { opacity: 1, duration: 1 }, "-=1");
 
       const storyNodes = gsap.utils.toArray(".story-node");
       gsap.fromTo(storyNodes, 
@@ -136,7 +162,7 @@ export default function Home() {
         }
       });
 
-      // Cinematic Assembly Animation
+      // Interactive Assembly Animation (Lower down the page)
       if (assemblyPinRef.current) {
         const assemblyTl = gsap.timeline({
           scrollTrigger: {
@@ -148,14 +174,13 @@ export default function Home() {
           }
         });
 
-        // 1. Setup Initial Scatter with STRICT scales
         partsRef.current.forEach((part, i) => {
           if (!part || !explodedParts[i]) return;
           gsap.set(part, {
             x: explodedParts[i].x,
             y: explodedParts[i].y,
             rotation: explodedParts[i].rot,
-            scale: explodedParts[i].scale, // Initial scale set here
+            scale: explodedParts[i].scale, 
             filter: `blur(${explodedParts[i].blur}px)`,
             opacity: 0
           });
@@ -164,13 +189,11 @@ export default function Home() {
         assemblyTl
           .to(sketchRef.current, { opacity: 0.6, duration: 1 })
           .to(partsRef.current, { opacity: 1, stagger: 0.02, duration: 1 }, "<")
-          // 2. Assemble all parts to the center WITHOUT CHANGING SCALE
           .to(partsRef.current, {
             x: 0,
             y: 0,
             rotation: 0,
             filter: "blur(0px)",
-            // Keep exactly the same scale as when scattered
             scale: (i) => explodedParts[i].scale, 
             stagger: 0.05,
             duration: 3,
@@ -277,7 +300,6 @@ export default function Home() {
     };
   }, [isExploded]);
 
-  // 3. Fix Button Click Animation to also strictly hold the scale
   const toggleExplodedView = () => {
     const nextState = !isExploded;
     setIsExploded(nextState);
@@ -304,16 +326,7 @@ export default function Home() {
     } else {
       partsRef.current.forEach((part, i) => {
         if (!part || !explodedParts[i]) return;
-        // Keep the exact same scale when re-assembling
-        gsap.to(part, { 
-          x: 0, 
-          y: 0, 
-          rotation: 0, 
-          scale: explodedParts[i].scale, 
-          filter: "blur(0px)", 
-          duration: 1, 
-          ease: "power3.inOut" 
-        });
+        gsap.to(part, { x: 0, y: 0, rotation: 0, scale: explodedParts[i].scale * 0.5, filter: "blur(0px)", duration: 1, ease: "power3.inOut" });
       });
       gsap.to(finalPieceRef.current, { opacity: 1, duration: 0.5, delay: 0.8 });
       gsap.to(partsRef.current, { opacity: 0, duration: 0.5, delay: 0.8 });
@@ -360,19 +373,32 @@ export default function Home() {
           
           <div 
             ref={jewelleryRef} 
-            className="relative w-[54vw] md:w-[36vw] max-w-[520px] aspect-square opacity-0 scale-95 pointer-events-auto flex items-center justify-center" 
+            className="relative w-[54vw] md:w-[36vw] max-w-[520px] aspect-square pointer-events-auto flex items-center justify-center" 
             data-cursor="EXPLORE"
           >
+            {/* HERO SCATTERED COMPONENTS */}
+            {explodedParts.map((comp, i) => (
+              <img 
+                key={`hero-part-${i}`}
+                ref={(el) => { heroPartsRef.current[i] = el; }}
+                src={comp.src}
+                className="absolute w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-2xl"
+                style={{ zIndex: comp.zIndex, mixBlendMode: comp.blend as any }}
+              />
+            ))}
+
+            {/* HERO FINAL NECKLACE */}
             <img 
+              ref={heroFinalPieceRef}
               src="/necklace-final.png" 
               alt="High Jewellery Necklace: Floral Symphony" 
-              className="w-full h-full object-contain drop-shadow-2xl brightness-95 contrast-110" 
+              className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl brightness-95 contrast-110 opacity-0" 
             />
           </div>
         </div>
 
         <div className="relative z-20 flex flex-col items-center text-center mt-[40vh] md:mt-[50vh]">
-          <h1 ref={nameRef} className="font-serif text-6xl md:text-8xl lg:text-9xl text-[#F5F3EC] uppercase tracking-widest opacity-0 translate-y-10 leading-none">
+          <h1 ref={nameRef} className="font-serif text-6xl md:text-8xl lg:text-9xl text-[#F5F3EC] uppercase tracking-widest opacity-0 translate-y-10 leading-none drop-shadow-lg">
             Disha<br/>Bafna
           </h1>
           <p ref={titleRef} className="font-sans text-[10px] md:text-xs tracking-[0.6em] text-[#D4AF37] uppercase mt-8 opacity-0 translate-y-4">
@@ -435,7 +461,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* REWRITTEN: CINEMATIC IMAGE ASSEMBLY */}
+      {/* INTERACTIVE ASSEMBLY SECTION */}
       <section ref={assemblyPinRef} className="relative w-full h-screen bg-[#2A090D] overflow-hidden border-t border-[#D4AF37]/10">
         <div ref={assemblyTrackRef} className="relative w-full h-full flex flex-col items-center justify-center px-6">
           
@@ -457,7 +483,6 @@ export default function Home() {
               className="absolute inset-0 w-full h-full object-contain opacity-0 mix-blend-screen transition-opacity duration-500 pointer-events-none filter contrast-125"
             />
 
-            {/* True Image Components with Depth of Field */}
             <div className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center">
               {explodedParts.map((comp, i) => (
                 <img 
@@ -465,12 +490,8 @@ export default function Home() {
                   ref={(el) => { partsRef.current[i] = el; }}
                   src={comp.src}
                   alt="Jewellery Component"
-                  // 4. Force CSS containment so GSAP scale acts consistently
-                  className="absolute w-[500px] h-[500px] object-contain drop-shadow-2xl"
-                  style={{ 
-                    zIndex: comp.zIndex, 
-                    mixBlendMode: comp.blend as any 
-                  }}
+                  className="absolute w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-2xl"
+                  style={{ zIndex: comp.zIndex, mixBlendMode: comp.blend as any }}
                 />
               ))}
             </div>
