@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "../../lib/utils";
@@ -62,7 +62,7 @@ export default function CollectionsArchive() {
         });
       });
 
-      // 4. Word Sequence Animations (DREAM -> IMAGINATION...)
+      // 4. Word Sequence Animations
       gsap.utils.toArray(".word-sequence").forEach((seq: any) => {
         const words = seq.querySelectorAll("span");
         gsap.fromTo(words, 
@@ -107,14 +107,16 @@ export default function CollectionsArchive() {
         .to(".morph-modern", { opacity: 0, y: -20, duration: 1 }, "+=0.5")
         .to(".morph-tomorrow", { opacity: 1, y: 0, duration: 1 }, "<");
 
-      // 7. Jewellery Image Parallax & Lighting Reveal
+      // 7. Jewellery Image Parallax
       gsap.utils.toArray(".jewellery-frame").forEach((frame: any) => {
         const img = frame.querySelector(".jewellery-img");
-        gsap.to(img, {
-          yPercent: 15,
-          ease: "none",
-          scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true }
-        });
+        if(img) {
+          gsap.to(img, {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true }
+          });
+        }
       });
 
     }, containerRef);
@@ -122,11 +124,11 @@ export default function CollectionsArchive() {
     return () => ctx.revert();
   }, []);
 
-  // Lock body scroll when viewer is open
-  useLayoutEffect(() => {
+  // Lock body scroll when archive viewer is open
+  useEffect(() => {
     if (activePiece) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-    return () => { document.body.style.overflow = 'auto'; };
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
   }, [activePiece]);
 
   return (
@@ -144,7 +146,7 @@ export default function CollectionsArchive() {
         </div>
       </div>
 
-      {/* 03 - HERO SECTION */}
+      {/* 01 - HERO SECTION */}
       <section className="relative w-full h-screen flex flex-col items-center justify-center text-center px-6">
         {/* Subtle background geometry */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
@@ -174,62 +176,77 @@ export default function CollectionsArchive() {
         </div>
       </section>
 
-      {/* 05 - COLLECTION 01: FREEDOM TO DREAM */}
-      <section className="collection-chapter relative w-full min-h-screen py-32 px-6 lg:px-32">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+      {/* 02 - COLLECTION 01: FREEDOM TO DREAM (MATCHING SCREENSHOT LAYOUT) */}
+      <section className="collection-chapter relative w-full min-h-screen py-32 px-6 lg:px-32 flex items-center">
+        <div className="max-w-[1400px] w-full mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
           
-          <div className="w-full lg:w-1/2 z-10">
-            <span className="font-sans text-xl text-[#D4AF37] mb-4 block">01</span>
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl uppercase tracking-wide leading-none mb-12">
-              Freedom<br />To Dream
+          {/* Left Text Block */}
+          <div className="w-full lg:w-1/2 z-10 flex flex-col items-start text-left">
+            <span className="font-sans text-sm md:text-base text-[#D4AF37] mb-6 block">01</span>
+            <h2 className="font-serif text-[4rem] md:text-[6rem] lg:text-[8.5rem] text-[#F5F3EC] uppercase tracking-tighter leading-[0.9] mb-12 drop-shadow-2xl">
+              Freedom<br />To<br />Dream
             </h2>
-            <div className="w-16 h-[1px] bg-[#D4AF37]/50 mb-12" />
-            <p className="font-serif text-2xl italic text-[#F5F3EC]/80 max-w-md leading-relaxed">
+            <div className="w-24 h-[1px] bg-[#D4AF37]/50 mb-12" />
+            <p className="font-serif text-2xl md:text-3xl italic text-[#F5F3EC]/80 max-w-lg leading-relaxed">
               "Imagination is a form of freedom—how dreams and inner visions can feel like a quiet escape from reality."
             </p>
           </div>
 
-          {/* Floating Editorial Piece */}
-          <div className="w-full lg:w-1/2 h-[70vh] relative group" data-cursor="VIEW">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#2A090D] via-transparent to-transparent z-10" />
-            <div className="jewellery-frame w-full h-full overflow-hidden">
-               {/* Replace with actual Wings of Dreams image */}
-              <div className="jewellery-img w-full h-[120%] -top-[10%] bg-[#D4AF37]/5 relative opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
-            </div>
-            <div className="absolute bottom-10 left-10 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-              <h3 className="font-sans text-xs tracking-[0.3em] uppercase text-[#D4AF37] mb-2">Wings of Dreams</h3>
+          {/* Right Clickable Image Block */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">
+            {/* LINK TO FREEDOM TO DREAM PAGE */}
+            <a href="/collections/freedom-to-dream" className="w-full max-w-[500px] aspect-square relative group cursor-pointer block mb-8">
+              
+              {/* Image Container */}
+              <div className="absolute inset-0 bg-[#1A0507] border border-[#D4AF37]/20 overflow-hidden shadow-2xl">
+                <div className="w-full h-full bg-[#D4AF37]/5 transition-transform duration-1000 group-hover:scale-110 opacity-60" />
+              </div>
+              
+              {/* WHITE CIRCULAR "VIEW" BUTTON */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 bg-[#F5F3EC] rounded-full flex items-center justify-center transition-transform duration-700 group-hover:scale-110 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-20">
+                <span className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#2A090D] font-bold ml-1">View</span>
+              </div>
+
+            </a>
+
+            {/* Description Text under Image */}
+            <div className="text-center lg:text-center w-full max-w-[500px]">
+              <h3 className="font-sans text-sm tracking-[0.4em] uppercase text-[#D4AF37] mb-3">Wings of Dreams</h3>
               <p className="font-sans text-[10px] tracking-widest uppercase text-[#F5F3EC]/50">Ballerina • Motion • Courage</p>
             </div>
           </div>
-        </div>
 
-        {/* Visual Progression */}
-        <div className="word-sequence w-full py-40 flex justify-center space-x-6 md:space-x-12 font-serif text-2xl md:text-4xl text-[#D4AF37]/40 uppercase tracking-widest text-center">
-          <span>Dream</span>
-          <span className="text-[#F5F3EC]/20">→</span>
-          <span>Imagination</span>
-          <span className="text-[#F5F3EC]/20">→</span>
-          <span>Freedom</span>
-          <span className="text-[#F5F3EC]/20">→</span>
-          <span className="text-[#F5F3EC]">Form</span>
         </div>
       </section>
 
-      {/* 08 - COLLECTION 02: ABSTRACT DESIGN AND RETRO */}
+      {/* Visual Progression Separator */}
+      <div className="word-sequence w-full py-20 flex justify-center space-x-6 md:space-x-12 font-serif text-2xl md:text-4xl text-[#D4AF37]/40 uppercase tracking-widest text-center border-b border-[#D4AF37]/10">
+        <span>Dream</span>
+        <span className="text-[#F5F3EC]/20">→</span>
+        <span>Imagination</span>
+        <span className="text-[#F5F3EC]/20">→</span>
+        <span>Freedom</span>
+        <span className="text-[#F5F3EC]/20">→</span>
+        <span className="text-[#F5F3EC]">Form</span>
+      </div>
+
+      {/* 03 - COLLECTION 02: ABSTRACT DESIGN AND RETRO */}
       <section className="collection-chapter relative w-full min-h-screen py-32 px-6 lg:px-32 bg-[#1A0507]">
         
-        <div className="max-w-7xl mx-auto mb-32">
-          <span className="font-sans text-xl text-[#D4AF37] mb-4 block text-center lg:text-left">02</span>
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl uppercase tracking-wide leading-none text-center lg:text-left mb-12">
-            Abstract<br />Design & Retro
-          </h2>
-          <p className="font-sans text-xs tracking-[0.3em] uppercase text-[#F5F3EC]/50 text-center lg:text-left max-w-md lg:mx-0 mx-auto">
+        <div className="max-w-[1400px] mx-auto mb-32 flex flex-col lg:flex-row justify-between items-end">
+          <div>
+            <span className="font-sans text-xl text-[#D4AF37] mb-4 block">02</span>
+            <h2 className="font-serif text-[4rem] md:text-[6rem] lg:text-[7rem] uppercase tracking-tighter leading-none mb-6">
+              Abstract<br />Design & Retro
+            </h2>
+          </div>
+          <p className="font-sans text-xs tracking-[0.3em] uppercase text-[#F5F3EC]/50 max-w-sm mb-4">
             Metro • City Movement • Train Windows • Ticket Booths • Platform Lines
           </p>
         </div>
 
-        {/* Geometric Grid Interaction */}
-        <div className="geo-grid-container relative w-full h-[60vh] max-w-5xl mx-auto border border-[#D4AF37]/10 flex items-center justify-center overflow-hidden">
+        {/* CLICKABLE LINK TO COLLECTION 02 */}
+        <a href="/collections/abstract-retro" className="geo-grid-container relative w-full h-[60vh] max-w-5xl mx-auto border border-[#D4AF37]/10 flex items-center justify-center overflow-hidden group block cursor-pointer">
           {/* Animated Lines */}
           <div className="geo-line absolute top-1/3 left-0 w-full h-[1px] bg-[#D4AF37]/20 origin-left" />
           <div className="geo-line absolute top-2/3 left-0 w-full h-[1px] bg-[#D4AF37]/20 origin-right" />
@@ -237,31 +254,43 @@ export default function CollectionsArchive() {
           <div className="geo-line absolute left-2/3 top-0 w-[1px] h-full bg-[#D4AF37]/20 origin-bottom" />
           
           <div className="absolute inset-0 flex items-center justify-center p-12">
-            <div className="jewellery-frame w-full max-w-md h-full bg-[#2A090D] border border-[#D4AF37]/30 z-10 p-4 shadow-2xl relative group cursor-pointer" onClick={() => setActivePiece(archivePieces[4])}>
-              <div className="jewellery-img w-full h-full bg-[#F5F3EC]/5 transition-colors duration-500 group-hover:bg-[#D4AF37]/10" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[#2A090D]/80 backdrop-blur-sm">
-                <span className="font-sans text-xs tracking-[0.3em] text-[#D4AF37] uppercase">View Archive</span>
-              </div>
+            <div className="w-full max-w-md h-full bg-[#2A090D] border border-[#D4AF37]/30 z-10 p-4 shadow-2xl relative">
+              <div className="w-full h-full bg-[#F5F3EC]/5 transition-colors duration-500 group-hover:bg-[#D4AF37]/10" />
             </div>
           </div>
-        </div>
+
+          {/* WHITE CIRCULAR "VIEW" BUTTON */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-32 md:h-32 bg-[#F5F3EC] rounded-full flex items-center justify-center transition-all duration-700 group-hover:scale-110 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-20 opacity-0 scale-90 group-hover:opacity-100">
+            <span className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#2A090D] font-bold ml-1">View</span>
+          </div>
+        </a>
       </section>
 
-      {/* 10 - COLLECTION 03: CULTURAL ECHOES */}
+      {/* 04 - COLLECTION 03: CULTURAL ECHOES */}
       <section className="collection-chapter relative w-full min-h-screen py-32 px-6 lg:px-32">
-        <div className="max-w-7xl mx-auto flex flex-col items-end text-right mb-32">
+        <div className="max-w-[1400px] mx-auto flex flex-col items-end text-right mb-24">
           <span className="font-sans text-xl text-[#D4AF37] mb-4 block">03</span>
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl uppercase tracking-wide leading-none mb-12">
+          <h2 className="font-serif text-[4rem] md:text-[6rem] lg:text-[7rem] uppercase tracking-tighter leading-none mb-12">
             Cultural Echoes<br />Of Tomorrow
           </h2>
           <div className="w-16 h-[1px] bg-[#D4AF37]/50 mb-12 ml-auto" />
-          <p className="font-serif text-2xl italic text-[#F5F3EC]/80 max-w-md leading-relaxed">
+          <p className="font-serif text-2xl md:text-3xl italic text-[#F5F3EC]/80 max-w-lg leading-relaxed">
             "Traditional cultures evolving into the future—Indian heritage seamlessly blended with modern life."
           </p>
         </div>
 
+        {/* CLICKABLE LINK TO COLLECTION 03 */}
+        <a href="/collections/cultural-echoes" className="w-full max-w-5xl aspect-[16/9] mx-auto relative group block cursor-pointer border border-[#D4AF37]/20 overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-[#D4AF37]/5 transition-transform duration-1000 group-hover:scale-105" />
+          
+          {/* WHITE CIRCULAR "VIEW" BUTTON */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 bg-[#F5F3EC] rounded-full flex items-center justify-center transition-all duration-700 group-hover:scale-110 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-20 opacity-0 scale-90 group-hover:opacity-100">
+            <span className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#2A090D] font-bold ml-1">View</span>
+          </div>
+        </a>
+
         {/* Cultural Text Morph */}
-        <div className="cultural-morph-container h-[50vh] flex items-center justify-center relative overflow-hidden">
+        <div className="cultural-morph-container h-[40vh] flex items-center justify-center relative overflow-hidden mt-16 pointer-events-none">
           <div className="relative h-24 w-full flex items-center justify-center text-5xl md:text-7xl font-serif uppercase tracking-widest text-[#D4AF37]">
             <span className="morph-tradition absolute">Tradition</span>
             <span className="morph-modern absolute opacity-0 translate-y-10">Modern</span>
@@ -270,7 +299,7 @@ export default function CollectionsArchive() {
         </div>
       </section>
 
-      {/* 13 - EDITORIAL ARCHIVE GRID */}
+      {/* 05 - EDITORIAL ARCHIVE GRID (Quick View Modals) */}
       <section className="w-full py-32 px-6 lg:px-12 bg-[#1A0507]">
         <div className="max-w-[1600px] mx-auto">
           <h3 className="font-serif text-4xl text-center text-[#F5F3EC] mb-24 uppercase tracking-widest">
@@ -291,9 +320,9 @@ export default function CollectionsArchive() {
                 <div className="jewellery-img absolute inset-[-10%] w-[120%] h-[120%] bg-[#F5F3EC]/5 transition-transform duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-white/0 group-hover:via-white/5 transition-all duration-700 pointer-events-none" />
                 
-                {/* 14 - Hover Annotation Overlay */}
+                {/* Hover Annotation Overlay */}
                 <div className="absolute inset-0 bg-[#2A090D]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-8 flex flex-col justify-between backdrop-blur-sm">
-                  <span className="font-sans text-[10px] tracking-[0.4em] text-[#D4AF37]">{piece.col}</span>
+                  <span className="font-sans text-[10px] tracking-[0.4em] text-[#D4AF37]">COLLECTION {piece.col}</span>
                   <div>
                     <h4 className="font-serif text-2xl md:text-3xl text-[#F5F3EC] uppercase mb-4">{piece.name}</h4>
                     <div className="flex flex-col space-y-1">
@@ -316,8 +345,8 @@ export default function CollectionsArchive() {
         </div>
       </section>
 
-      {/* 22 - FINAL TRANSITION SECTION */}
-      <section className="w-full h-[80vh] flex flex-col items-center justify-center text-center px-6 relative bg-[#2A090D]">
+      {/* 06 - FINAL TRANSITION SECTION */}
+      <section className="w-full h-[80vh] flex flex-col items-center justify-center text-center px-6 relative bg-[#2A090D] border-t border-[#D4AF37]/20">
         <h2 className="font-serif text-5xl md:text-7xl lg:text-9xl uppercase tracking-widest text-[#F5F3EC] mb-6 opacity-90">
           Three Worlds.
         </h2>
@@ -341,9 +370,11 @@ export default function CollectionsArchive() {
 
       <Footer />
 
-      {/* 15 - MAGNIFYING JEWELLERY EXPERIENCE (Fullscreen Modal) */}
+      {/* ------------------------------------------------------------------------ */}
+      {/* MAGNIFYING JEWELLERY EXPERIENCE (Fullscreen Modal for Archive) */}
+      {/* ------------------------------------------------------------------------ */}
       {activePiece && (
-        <div className="fixed inset-0 z-[999] bg-[#2A090D] flex flex-col lg:flex-row animate-in fade-in duration-500">
+        <div className="fixed inset-0 z-[9999] bg-[#2A090D] flex flex-col lg:flex-row animate-in fade-in duration-500">
           
           {/* Close Button */}
           <button 
