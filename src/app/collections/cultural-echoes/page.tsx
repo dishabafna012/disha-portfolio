@@ -30,70 +30,80 @@ const collectionData = {
       name: "Legacy Bloom",
       description: "This design was created by combining traditional floral motifs with modern design, showing how the beauty of our heritage can be transformed into elegant jewellery.",
       type: "Brooch",
-      materials: "Gold • Red Cabochon • Jade • Diamond"
+      materials: "Gold • Red Cabochon • Jade • Diamond",
+      image: "/theme3/legacy-bloom.png"
     },
     {
       id: "vibrant-harvest",
       name: "Vibrant Harvest",
       description: "This design was created by turning traditional fruit-inspired motifs into a modern pattern, showing how the colorful traditions of the past can inspire the future.",
       type: "Brooch",
-      materials: "Ruby Cabochon • Pink Tourmaline • Carnelian • Gold"
+      materials: "Ruby Cabochon • Pink Tourmaline • Carnelian • Gold",
+      image: "/theme3/vibrant-harvest.png"
     },
     {
       id: "timeless-bloom",
       name: "Timeless Bloom",
       description: "This design was created by combining traditional floral patterns with a watch strap design, showing how our cultural heritage can grow and evolve with time.",
       type: "Watch",
-      materials: "Gold • Diamond"
+      materials: "Gold • Diamond",
+      image: "/theme3/timeless-bloom.png"
     },
     {
       id: "heritage-link",
       name: "Heritage Link",
       description: "This design was created by transforming traditional geometric patterns into a modern link design, showing the continuous journey of culture from the past to the future.",
       type: "Bracelet",
-      materials: "Pink Diamond • Gold"
+      materials: "Pink Diamond • Gold",
+      image: "/theme3/heritage-link.png"
     },
     {
       id: "regal-unfolding",
       name: "Regal Unfolding",
       description: "This design was created by transforming the traditional peacock motif into a modern jewelry form, showing how cultural beauty and pride can be carried into the future",
       type: "Pendant",
-      materials: "Enamelling • Diamond • Peridot"
+      materials: "Enamelling • Diamond • Peridot",
+      image: "/theme3/regal-unfolding.png"
     },
     {
       id: "majestic-guardian",
       name: "Majestic Guardian",
       description: "This design was created by using the elephant as inspiration, showing how its wisdom and strength can be preserved through modern jewelry design.",
       type: "Pendant",
-      materials: "Gold • Diamond"
+      materials: "Gold • Diamond",
+      image: "/theme3/majestic-guardian.png"
     },
     {
       id: "mosaic-heritage",
       name: "Mosaic Heritage",
       description: "This design was created by combining traditional floral patterns into a modern design, showing how our cultural heritage can be transformed into a bold and stylish expression.",
       type: "Earrings",
-      materials: "Watermelon Tourmaline • Diamond • Enamelling"
+      materials: "Watermelon Tourmaline • Diamond • Enamelling",
+      image: "/theme3/mosaic-heritage.png"
     },
     {
       id: "vibrant-legacy-cuff",
       name: "Vibrant Legacy Cuff",
       description: "This design was created by turning the traditional peacock motif into a modern ear cuff, showing how cultural symbols can become fashionable and wearable today.",
       type: "Ear Cuff",
-      materials: "Blue Sapphire • Ruby • Emerald • Diamond"
+      materials: "Blue Sapphire • Ruby • Emerald • Diamond",
+      image: "/theme3/vibrant-legacy-cuff.png"
     },
     {
       id: "ethereal-petal",
       name: "Ethereal Petal",
       description: "This design was created by transforming natural shapes into a modern gold and diamond pattern, showing how the beauty of nature can be reimagined in a stylish and elegant way.",
       type: "Set (Necklace, Bracelet, Earrings)",
-      materials: "Gold • Pink & White Dia"
+      materials: "Gold • Pink & White Dia",
+      image: "/theme3/ethereal-petal.png"
     },
     {
       id: "radiant-spire",
       name: "Radiant Spire",
       description: "This design was created by combining traditional floral forms with a modern structure, showing how the beauty of our heritage can be refined to suit today's world.",
       type: "Set (Necklace, Bracelet, Earrings)",
-      materials: "Gold • Diamond"
+      materials: "Gold • Diamond",
+      image: "/theme3/radiant-spire.png"
     }
   ]
 };
@@ -347,7 +357,7 @@ export default function CulturalEchoesPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#9B1B30]/10 to-[#004B49]/10 opacity-50 mix-blend-multiply" />
                 <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center relative overflow-hidden">
                   <div className="parallax-img absolute inset-[-10%] w-[120%] h-[120%] bg-[#F5F3EC]/50" />
-                  <span className="font-serif text-2xl text-[#5A1217]/30 italic relative z-10">Legacy Bloom Image</span>
+                  <img src={collectionData.pieces[0].image} alt="Legacy Bloom" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-110 z-10" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#5A1217] mb-3">{collectionData.pieces[0].type}</span>
@@ -369,7 +379,7 @@ export default function CulturalEchoesPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#E66A7A]/10 to-[#D96B27]/10 opacity-50 mix-blend-multiply" />
                 <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center relative overflow-hidden">
                   <div className="parallax-img absolute inset-[-10%] w-[120%] h-[120%] bg-[#F5F3EC]/50" />
-                  <span className="font-serif text-2xl text-[#5A1217]/30 italic relative z-10">Vibrant Harvest Image</span>
+                  <img src={collectionData.pieces[1].image} alt="Vibrant Harvest" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-110 z-10" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#5A1217] mb-3">{collectionData.pieces[1].type}</span>
@@ -400,7 +410,8 @@ export default function CulturalEchoesPage() {
                   onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0F4C81]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  <span className="font-serif text-2xl text-[#F5F3EC]/30 italic">Regal Unfolding Image</span>
+                  <img src={collectionData.pieces[4].image} alt="Regal Unfolding" className="absolute inset-0 w-full h-full object-contain p-12 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105 z-10" />
+
                 </div>
                 <div className="flex flex-col md:flex-row justify-between mt-8 gap-8">
                   <div className="max-w-md">
@@ -424,7 +435,7 @@ export default function CulturalEchoesPage() {
                   onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#D4AF37]/10 to-transparent translate-y-full group-hover:-translate-y-full transition-transform duration-1000" />
-                  <span className="font-serif text-2xl text-[#F5F3EC]/30 italic">Majestic Guardian Image</span>
+                  <img src={collectionData.pieces[5].image} alt="Majestic Guardian" className="absolute inset-0 w-full h-full object-contain p-12 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105 z-10" />
                 </div>
                 <div className="mt-8">
                   <span className="font-sans text-[8px] tracking-[0.4em] uppercase text-[#F5F3EC]/40 block mb-2">{collectionData.pieces[5].type}</span>
@@ -437,15 +448,19 @@ export default function CulturalEchoesPage() {
               </div>
             </div>
 
-            {/* Watches & Bracelets Inline row */}
+            {/* Watches & Bracelets Inline row with Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 border-t border-[#D4AF37]/20 pt-16">
               {[collectionData.pieces[2], collectionData.pieces[3]].map((piece, i) => (
-                <div key={piece.id} className={cn("scroll-reveal p-8", i === 0 ? "md:border-r border-[#D4AF37]/20" : "")}>
+                <div key={piece.id} className={cn("scroll-reveal p-8 flex flex-col group", i === 0 ? "md:border-r border-[#D4AF37]/20" : "")}>
+                  <div className="w-full aspect-video bg-[#2A090D] border border-[#D4AF37]/20 flex items-center justify-center mb-8 relative overflow-hidden shadow-xl">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0" />
+                    <img src={piece.image} alt={piece.name} className="absolute inset-0 w-full h-full object-contain p-6 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105 z-10" />
+                  </div>
                   <div className="flex justify-between items-start mb-8">
                     <h4 className="font-serif text-4xl text-[#F5F3EC] uppercase tracking-widest">{piece.name}</h4>
                     <span className="font-sans text-[8px] tracking-[0.4em] uppercase text-[#D4AF37] border border-[#D4AF37]/30 px-3 py-1">{piece.type}</span>
                   </div>
-                  <p className="font-sans text-xs tracking-widest leading-loose uppercase text-[#F5F3EC]/60 mb-8 max-w-sm">
+                  <p className="font-sans text-xs tracking-widest leading-loose uppercase text-[#F5F3EC]/60 mb-8 max-w-sm flex-grow">
                     {piece.description}
                   </p>
                   <span className="font-sans text-[8px] tracking-widest uppercase text-[#D4AF37]">{piece.materials}</span>
@@ -469,7 +484,7 @@ export default function CulturalEchoesPage() {
               <div key={piece.id} className="scroll-reveal group cursor-pointer" onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }} onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}>
                 <div className="image-mask w-full aspect-[4/3] bg-[#FFFFFF] border border-[#D4AF37]/30 shadow-xl relative overflow-hidden mb-8 p-4">
                   <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center relative overflow-hidden">
-                    <span className="font-serif text-2xl text-[#5A1217]/30 italic relative z-10 group-hover:scale-110 transition-transform duration-700">{piece.name} Image</span>
+                    <img src={piece.image} alt={piece.name} className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-xl group-hover:scale-110 transition-transform duration-700 z-10" />
                   </div>
                 </div>
                 <div className="flex justify-between items-end border-b-2 border-[#1A0507] pb-4 mb-4">
@@ -490,9 +505,9 @@ export default function CulturalEchoesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               {[collectionData.pieces[8], collectionData.pieces[9]].map((piece) => (
                 <div key={piece.id} className="flex flex-col text-center items-center">
-                  <div className="w-full max-w-[300px] aspect-square rounded-full border border-[#D4AF37]/50 flex items-center justify-center mb-8 bg-white shadow-lg overflow-hidden group">
-                     <span className="font-serif text-[#5A1217]/30 italic group-hover:scale-110 transition-transform duration-700">{piece.name} Image</span>
-                  </div>
+                  <div className="w-full max-w-[300px] aspect-square rounded-full border border-[#D4AF37]/50 flex items-center justify-center mb-8 bg-white shadow-lg overflow-hidden group relative">
+                   <img src={piece.image} alt={piece.name} className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-md group-hover:scale-110 transition-transform duration-700 z-10" />
+                </div>
                   <h4 className="font-serif text-3xl text-[#1A0507] uppercase tracking-widest mb-4">{piece.name}</h4>
                   <p className="font-sans text-[10px] tracking-widest leading-loose uppercase text-[#1A0507]/60 mb-6 max-w-sm">
                     {piece.description}

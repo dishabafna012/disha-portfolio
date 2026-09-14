@@ -28,61 +28,71 @@ const collectionData = {
       id: "wings",
       name: "Wings of Dreams",
       description: "This design was created to represent a bird in flight, symbolizing freedom, confidence, and the pursuit of dreams.",
-      type: "Brooch"
+      type: "Brooch",
+      image: "/theme1/wings.png" // ADDED IMAGE PATH
     },
     {
       id: "elans",
       name: "Elans of Dreams",
       description: "This design was inspired by a ballerina in motion, symbolizing courage, creativity, and the beauty of following your dreams.",
-      type: "Brooch"
+      type: "Brooch",
+      image: "/theme1/elans.png" // ADDED IMAGE PATH
     },
     {
       id: "ethereal",
       name: "Ethereal Ascent",
       description: "This design was created by showing a snowflake emerging from a golden form, symbolizing imagination, creativity, and endless possibilities.",
-      type: "Cuff Bracelet"
+      type: "Cuff Bracelet",
+      image: "/theme1/ethereal.png" // ADDED IMAGE PATH
     },
     {
       id: "phoenix",
       name: "The Awakened Phoenix",
       description: "This design was created using a flying phoenix as inspiration, symbolizing freedom, transformation, and the power to rise beyond limitations.",
-      type: "Cuff Bracelet"
+      type: "Cuff Bracelet",
+      image: "/theme1/phoenix.png" // ADDED IMAGE PATH
     },
     {
       id: "whispering",
       name: "Whispering Vines",
       description: "This design was created by imagining nature growing freely on the ear, with gold and pearls symbolizing dreams that bloom without limits.",
-      type: "Ear Cuff"
+      type: "Ear Cuff",
+      image: "/theme1/vines.png" // ADDED IMAGE PATH
     },
     {
       id: "prismatic",
       name: "Prismatic Bloom",
       description: "This design was created by using coral-like branches as inspiration, symbolizing the free and endless growth of imagination.",
-      type: "Ear Cuff"
+      type: "Ear Cuff",
+      image: "/theme1/prismatic.png" // ADDED IMAGE PATH
     },
     {
       id: "flight",
       name: "Whispers of Flight",
       description: "This design was created by showing dragonflies in a circular frame, symbolizing freedom, creativity, and the courage to explore new possibilities.",
-      type: "Pendant"
+      type: "Pendant",
+      image: "/theme1/flight.png" // ADDED IMAGE PATH
     },
     {
       id: "flow",
       name: "Infinite Flow",
       description: "This design was created by imagining flowing water, symbolizing the endless flow of ideas, inspiration, and imagination.",
-      type: "Pendant"
+      type: "Pendant",
+      image: "/theme1/flow.png" // ADDED IMAGE PATH
     },
     {
       id: "ambition",
       name: "Golden Ambition",
       description: "This design was created by combining golden links with hanging emeralds, showing the balance between achieving goals and following our dreams.",
-      type: "Necklace"
+      type: "Necklace",
+      image: "/theme1/ambition.png" // ADDED IMAGE PATH
     },
     {
       id: "seashell",
       name: "Seashell of Dreams",
       description: "This design was created by transforming a protective shell into a symbol of inspiration, with an emerald representing the creative ideas hidden within us.",
-      type: "Ring/Pendant"
+      type: "Ring/Pendant",
+      image: "/theme1/seashell.png" // ADDED IMAGE PATH
     }
   ]
 };
@@ -262,8 +272,7 @@ export default function FreedomToDreamPage() {
           <div className="order-2 lg:order-1 relative aspect-[4/5] w-full max-w-md mx-auto">
             {/* Editorial Image Placement */}
             <div className="image-mask-reveal w-full h-full bg-[#F5F3EC] border border-[#D4AF37]/30 shadow-2xl relative overflow-hidden flex items-center justify-center p-8">
-              <div className="absolute top-4 left-4 font-sans text-[8px] tracking-widest uppercase text-[#5A1217]/50">Fig. 1 — Ideation</div>
-              <MotifSketchGraphic />
+              <img src="/theme1/sketch.png" alt="Ideation Sketch" className="w-full h-full object-cover opacity-80" />
             </div>
             {/* Decorative Tape/Pin effect from PDF style */}
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-4 bg-white/80 shadow-sm rotate-2 border border-[#D4AF37]/10" />
@@ -355,8 +364,8 @@ export default function FreedomToDreamPage() {
                 <div className="absolute -top-3 -left-3 w-16 h-16 border-t border-l border-[#5A1217] opacity-20" />
                 <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b border-r border-[#5A1217] opacity-20" />
                 
-                <div className="w-full h-full bg-[#FAF8F5] flex items-center justify-center group-hover:bg-[#1A0507] transition-colors duration-700">
-                  <span className="font-serif text-3xl text-[#5A1217]/20 group-hover:text-[#D4AF37]/40 transition-colors">Wings of Dreams Image</span>
+                <div className="w-full h-full bg-[#FAF8F5] flex items-center justify-center group-hover:bg-[#1A0507] transition-colors duration-700 relative overflow-hidden">
+                  <img src={collectionData.pieces[0].image} alt="Wings of Dreams" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-4">Brooch</span>
@@ -373,8 +382,8 @@ export default function FreedomToDreamPage() {
                 onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                 onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
               >
-                <div className="w-full h-full bg-[#FAF8F5] flex items-center justify-center group-hover:bg-[#1A0507] transition-colors duration-700">
-                  <span className="font-serif text-2xl text-[#5A1217]/20 group-hover:text-[#D4AF37]/40 transition-colors">Elans of Dreams Image</span>
+                <div className="w-full h-full bg-[#FAF8F5] flex items-center justify-center group-hover:bg-[#1A0507] transition-colors duration-700 relative overflow-hidden">
+                  <img src={collectionData.pieces[1].image} alt="Elans of Dreams" className="absolute inset-0 w-full h-full object-contain p-6 drop-shadow-xl transition-transform duration-1000 group-hover:scale-105" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-4">Brooch</span>
@@ -407,8 +416,8 @@ export default function FreedomToDreamPage() {
             <div className="lg:col-span-8 flex flex-col md:flex-row gap-8">
               <div className="w-full md:w-5/12 scroll-reveal group">
                 <div className="w-full aspect-[3/4] bg-[#F5F3EC] border border-[#D4AF37]/30 flex flex-col justify-between p-6">
-                  <div className="w-full h-[70%] bg-[#1A0507]/5 flex items-center justify-center">
-                     <span className="font-serif text-sm text-[#5A1217]/40">Ethereal Ascent</span>
+                  <div className="w-full h-[70%] bg-[#1A0507]/5 flex items-center justify-center overflow-hidden relative">
+                     <img src={collectionData.pieces[2].image} alt="Ethereal Ascent" className="absolute w-[150%] h-[150%] object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   <div className="pt-6 border-t border-[#D4AF37]/20 mt-auto">
                     <h4 className="font-serif text-2xl text-[#5A1217] mb-2">{collectionData.pieces[2].name}</h4>
@@ -421,8 +430,8 @@ export default function FreedomToDreamPage() {
               
               <div className="w-full md:w-7/12 md:mt-24 scroll-reveal group">
                 <div className="w-full aspect-square bg-[#F5F3EC] border border-[#D4AF37]/30 flex flex-col justify-between p-8 shadow-2xl">
-                  <div className="w-full h-[75%] bg-[#1A0507]/5 flex items-center justify-center">
-                     <span className="font-serif text-sm text-[#5A1217]/40">Awakened Phoenix</span>
+                  <div className="w-full h-[75%] bg-[#1A0507]/5 flex items-center justify-center overflow-hidden relative">
+                     <img src={collectionData.pieces[3].image} alt="Awakened Phoenix" className="absolute w-[120%] h-[120%] object-contain drop-shadow-2xl group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   <div className="pt-6 border-t border-[#D4AF37]/20 mt-auto text-right">
                     <h4 className="font-serif text-3xl text-[#5A1217] mb-2">{collectionData.pieces[3].name}</h4>
@@ -446,8 +455,8 @@ export default function FreedomToDreamPage() {
             {/* Whispering Vines */}
             <div className="w-full max-w-lg flex flex-col items-center scroll-reveal">
               <div className="w-full aspect-square rounded-full border border-[#D4AF37]/40 p-4 mb-10 overflow-hidden relative">
-                <div className="w-full h-full rounded-full bg-white flex items-center justify-center hover:scale-105 transition-transform duration-1000">
-                  <span className="font-serif text-[#5A1217]/30 italic">Whispering Vines Image</span>
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center group-hover:scale-105 transition-transform duration-1000 overflow-hidden relative">
+                  <img src={collectionData.pieces[4].image} alt="Whispering Vines" className="absolute w-[120%] h-[120%] object-contain drop-shadow-lg" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-3">Ear Cuff</span>
@@ -460,8 +469,8 @@ export default function FreedomToDreamPage() {
             {/* Prismatic Bloom */}
             <div className="w-full max-w-lg flex flex-col items-center scroll-reveal">
               <div className="w-full aspect-square rounded-full border border-[#D4AF37]/40 p-4 mb-10 overflow-hidden relative">
-                <div className="w-full h-full rounded-full bg-white flex items-center justify-center hover:scale-105 transition-transform duration-1000">
-                  <span className="font-serif text-[#5A1217]/30 italic">Prismatic Bloom Image</span>
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center group-hover:scale-105 transition-transform duration-1000 overflow-hidden relative">
+                  <img src={collectionData.pieces[5].image} alt="Prismatic Bloom" className="absolute w-[120%] h-[120%] object-contain drop-shadow-lg" />
                 </div>
               </div>
               <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-3">Ear Cuff</span>
@@ -480,12 +489,12 @@ export default function FreedomToDreamPage() {
             <h2 className="scroll-reveal font-serif text-4xl md:text-5xl text-[#D4AF37] mb-24 text-center italic">Pendants & Neckpieces</h2>
 
             {[
-              { piece: collectionData.pieces[6], imgText: "Whispers of Flight Image" },
-              { piece: collectionData.pieces[7], imgText: "Infinite Flow Image" },
-              { piece: collectionData.pieces[8], imgText: "Golden Ambition Image" },
-              { piece: collectionData.pieces[9], imgText: "Seashell of Dreams Image" }
-            ].map((item, index) => (
-              <div key={item.piece.id} className="scroll-reveal flex flex-col md:flex-row border-b border-[#D4AF37]/20 py-16 group hover:bg-[#2A090D]/50 transition-colors duration-500">
+              collectionData.pieces[6],
+              collectionData.pieces[7],
+              collectionData.pieces[8],
+              collectionData.pieces[9]
+            ].map((piece, index) => (
+              <div key={piece.id} className="scroll-reveal flex flex-col md:flex-row border-b border-[#D4AF37]/20 py-16 group hover:bg-[#2A090D]/50 transition-colors duration-500">
                 
                 {/* Number */}
                 <div className="w-full md:w-1/12 font-serif text-3xl text-[#D4AF37]/40 mb-6 md:mb-0 pt-2">
@@ -493,24 +502,23 @@ export default function FreedomToDreamPage() {
                 </div>
 
                 {/* Details */}
-                <div className="w-full md:w-5/12 pr-8 mb-8 md:mb-0">
+                <div className="w-full md:w-5/12 pr-8 mb-8 md:mb-0 z-10 relative">
                   <h3 className="font-serif text-4xl md:text-5xl text-[#F5F3EC] uppercase tracking-widest mb-4 group-hover:text-[#D4AF37] transition-colors">
-                    {item.piece.name}
+                    {piece.name}
                   </h3>
                   <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37]/70 block mb-8">
-                    {item.piece.type}
+                    {piece.type}
                   </span>
                   <p className="font-sans text-xs tracking-widest leading-[2em] uppercase text-[#F5F3EC]/50 max-w-sm">
-                    {item.piece.description}
+                    {piece.description}
                   </p>
                 </div>
 
-                {/* Image Placeholder */}
+                {/* Actual Image */}
                 <div className="w-full md:w-6/12 flex justify-end">
                   <div className="w-full md:w-[80%] aspect-[16/9] bg-[#2A090D] border border-[#D4AF37]/10 flex items-center justify-center overflow-hidden relative">
-                    {/* Hover gold sweep effect */}
-                    <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
-                    <span className="font-serif text-[#F5F3EC]/20 italic">{item.imgText}</span>
+                    <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out z-10" />
+                    <img src={piece.image} alt={piece.name} className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl group-hover:scale-110 transition-transform duration-1000 z-0" />
                   </div>
                 </div>
 

@@ -30,70 +30,80 @@ const collectionData = {
       name: "Toi Et Moi / You & Me",
       description: "This design captures the beauty of a dancing couple, where two figures are joined in a graceful and loving embrace.",
       type: "Brooch",
-      materials: "Gold • Diamond • Pearl"
+      materials: "Gold • Diamond • Pearl",
+      image: "/theme2/toi-et-moi.png"
     },
     {
       id: "currents",
       name: "Currents of Connection",
       description: "This design was created by imagining two fish swimming together, symbolizing the strong bond of \"you and me\" as they move through life side by side.",
       type: "Brooch",
-      materials: "Enamelling • Pearl • Blue Cabochon • Jade"
+      materials: "Enamelling • Pearl • Blue Cabochon • Jade",
+      image: "/theme2/currents.png"
     },
     {
       id: "twin-blooms",
       name: "Twin Blooms in Harmony",
       description: "This design features two golden flowers joined together, symbolizing the beautiful connection between two individuals.",
       type: "Watch / Bracelet",
-      materials: "Silver • Yellow Dia • Emerald • Blue Dia"
+      materials: "Silver • Yellow Dia • Emerald • Blue Dia",
+      image: "/theme2/twin-blooms.png"
     },
     {
       id: "temporal",
       name: "Temporal Flow",
       description: "This design was created by showing time as a smooth and flowing movement, with a bold emerald stone adding elegance and beauty to the watch design.",
       type: "Watch",
-      materials: "Gold • Diamond • Emerald"
+      materials: "Gold • Diamond • Emerald",
+      image: "/theme2/temporal.png"
     },
     {
       id: "prismatic",
       name: "Prismatic Halo",
       description: "This design was created by transforming a classic circular motif into a colorful sunburst pattern, showing the warmth, joy, and energy of the past.",
       type: "Pendant",
-      materials: "Multicolor Stones • Gold"
+      materials: "Multicolor Stones • Gold",
+      image: "/theme2/prismatic.png"
     },
     {
       id: "vintage",
       name: "Vintage Elegance",
       description: "This design was created by transforming a vintage floral form into a modern statement, with a bold red diamond rose resting elegantly on a diamond-studded brim.",
       type: "Pendant",
-      materials: "Red Dia • Diamond • Gold"
+      materials: "Red Dia • Diamond • Gold",
+      image: "/theme2/vintage.png"
     },
     {
       id: "golden-echoes",
       name: "Golden Echoes",
       description: "This design was created by capturing the beauty of flowing movement in gold, inspired by the graceful shapes found in classic art.",
       type: "Earrings",
-      materials: "Gold • Diamond • Pearl"
+      materials: "Gold • Diamond • Pearl",
+      image: "/theme2/golden-echoes.png"
     },
     {
       id: "labyrinth",
       name: "Labyrinth of Love",
       description: "This design was created as a delicate gold pattern around a central stone, representing the special energy and beauty of a cherished memory.",
       type: "Earrings",
-      materials: "Gold • Diamond"
+      materials: "Gold • Diamond",
+      image: "/theme2/labyrinth.png"
     },
     {
       id: "serpentine",
       name: "Serpentine Leaf",
       description: "Was created by envisioning an elegant, winding path where golden vines gracefully entwine around a vibrant emerald leaf.",
       type: "Necklace & Earrings",
-      materials: "Emerald • Diamond • Gold"
+      materials: "Emerald • Diamond • Gold",
+      image: "/theme2/serpentine.png"
     },
     {
       id: "plume",
       name: "Golden Plume",
       description: "Was inspired by the simple elegance of a feather caught in mid-air, capturing the effortless grace of nature in brushed gold.",
       type: "Pendant & Earrings",
-      materials: "Gold • Diamond"
+      materials: "Gold • Diamond",
+      image: "/theme2/plume.png"
     }
   ]
 };
@@ -363,8 +373,8 @@ export default function AbstractRetroPage() {
                 onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                 onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
               >
-                <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center group-hover:bg-[#5A1217]/10 transition-colors duration-700">
-                  <span className="font-serif text-2xl text-[#1A0507]/20 italic">Toi Et Moi Image</span>
+                <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center group-hover:bg-[#5A1217]/10 transition-colors duration-700 relative overflow-hidden">
+                  <img src={collectionData.pieces[0].image} alt="Toi Et Moi" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl group-hover:scale-105 transition-transform duration-1000" />
                 </div>
               </div>
               <div className="flex flex-col border-l-2 border-[#D4AF37] pl-6">
@@ -384,8 +394,8 @@ export default function AbstractRetroPage() {
                 onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                 onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
               >
-                <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center group-hover:bg-[#004B49]/10 transition-colors duration-700">
-                  <span className="font-serif text-2xl text-[#1A0507]/20 italic">Currents Image</span>
+                <div className="w-full h-full bg-[#1A0507]/5 flex items-center justify-center group-hover:bg-[#004B49]/10 transition-colors duration-700 relative overflow-hidden">
+                  <img src={collectionData.pieces[1].image} alt="Currents" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl group-hover:scale-105 transition-transform duration-1000" />
                 </div>
               </div>
               <div className="flex flex-col border-l-2 lg:border-l-0 lg:border-r-2 border-[#D4AF37] pl-6 lg:pl-0 lg:pr-6 text-left lg:text-right">
@@ -417,8 +427,8 @@ export default function AbstractRetroPage() {
                   onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                   onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  <span className="font-serif text-2xl text-[#F5F3EC]/30 italic">Twin Blooms Image</span>
+                  <div className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-[#D4AF37]/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+                  <img src={collectionData.pieces[2].image} alt="Twin Blooms" className="absolute inset-0 w-full h-full object-contain p-12 drop-shadow-2xl group-hover:scale-105 transition-transform duration-1000 z-0" />
                 </div>
                 <div className="flex justify-between items-start">
                   <div className="max-w-md">
@@ -440,8 +450,8 @@ export default function AbstractRetroPage() {
                   onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                   onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#004B49]/10 to-transparent translate-y-full group-hover:-translate-y-full transition-transform duration-1000" />
-                  <span className="font-serif text-2xl text-[#F5F3EC]/30 italic">Temporal Flow Image</span>
+                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-transparent via-[#004B49]/10 to-transparent translate-y-full group-hover:-translate-y-full transition-transform duration-1000 pointer-events-none" />
+                  <img src={collectionData.pieces[3].image} alt="Temporal Flow" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-2xl group-hover:scale-105 transition-transform duration-1000 z-0" />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-sans text-[8px] tracking-[0.4em] uppercase text-[#F5F3EC]/40 block mb-2">{collectionData.pieces[3].type}</span>
@@ -478,11 +488,11 @@ export default function AbstractRetroPage() {
                 </div>
                 
                 <div 
-                  className="w-full aspect-[4/3] bg-[#FFFFFF] border border-[#D4AF37]/30 flex items-center justify-center mb-10 overflow-hidden cursor-pointer shadow-sm group-hover:shadow-xl transition-shadow duration-500"
+                  className="w-full aspect-[4/3] bg-[#FFFFFF] border border-[#D4AF37]/30 flex items-center justify-center mb-10 overflow-hidden cursor-pointer shadow-sm group-hover:shadow-xl transition-shadow duration-500 relative"
                   onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                   onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
                 >
-                  <span className="font-serif text-[#1A0507]/20 italic group-hover:scale-110 transition-transform duration-700">{piece.name} Image</span>
+                  <img src={piece.image} alt={piece.name} className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-xl group-hover:scale-110 transition-transform duration-700" />
                 </div>
 
                 <h3 className="font-serif text-3xl text-[#1A0507] uppercase tracking-widest mb-4">{piece.name}</h3>
@@ -510,8 +520,8 @@ export default function AbstractRetroPage() {
                 onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                 onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
               >
-                <div className="absolute inset-0 bg-[#004B49]/5 transition-transform duration-1000 group-hover:scale-105" />
-                <span className="font-serif text-2xl text-[#1A0507]/30 italic relative z-10">Serpentine Leaf Image</span>
+                <div className="absolute inset-0 bg-[#004B49]/5 z-0" />
+                <img src={collectionData.pieces[8].image} alt="Serpentine Leaf" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-xl group-hover:scale-110 transition-transform duration-1000 z-10" />
               </div>
               <div className="w-full md:w-1/2 text-left md:pl-12 border-l border-[#D4AF37]/30">
                 <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-4 block">{collectionData.pieces[8].type}</span>
@@ -530,8 +540,8 @@ export default function AbstractRetroPage() {
                 onMouseEnter={() => { setCursorVariant("explore"); setCursorText("VIEW"); }}
                 onMouseLeave={() => { setCursorVariant("default"); setCursorText(""); }}
               >
-                <div className="absolute inset-0 bg-[#D4AF37]/10 transition-transform duration-1000 group-hover:scale-105" />
-                <span className="font-serif text-2xl text-[#1A0507]/30 italic relative z-10">Golden Plume Image</span>
+                <div className="absolute inset-0 bg-[#D4AF37]/10 z-0" />
+                <img src={collectionData.pieces[9].image} alt="Golden Plume" className="absolute inset-0 w-full h-full object-contain p-8 drop-shadow-xl group-hover:scale-110 transition-transform duration-1000 z-10" />
               </div>
               <div className="w-full md:w-1/2 text-right md:pr-12 border-r border-[#D4AF37]/30">
                 <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-4 block">{collectionData.pieces[9].type}</span>
