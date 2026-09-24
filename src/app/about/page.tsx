@@ -81,7 +81,7 @@ const eightDirections = [
     id: 8,
     title: "North Star",
     emoji: "⭐",
-    angle: -90, // Top
+    angle: -90, // Mathematically, -90 degrees on a standard circle points straight UP
     primaryText: "Whenever I think of the North Star, I think of having something that guides me and reminds me where I want to go.",
     secondaryText: "As a jewellery designer, it represents having my own creative direction and vision, instead of simply following trends.",
     visualConcept: "one small star, subtle movement, finding my own direction"
@@ -239,7 +239,7 @@ export default function AboutPage() {
         
         {/* Left: Typography */}
         <div className="relative z-10 w-full lg:w-1/2 pt-20 lg:pt-0 flex flex-col justify-center">
-          <h1 className="hero-reveal font-serif text-7xl md:text-[9rem] lg:text-[11rem] leading-none text-luxury-burgundy uppercase tracking-tight mb-6">
+          <h1 className="hero-reveal font-serif text-5xl md:text-7xl lg:text-8xl leading-none text-luxury-burgundy uppercase tracking-tight mb-6">
             Disha
           </h1>
           <p className="hero-reveal font-sans text-lg md:text-xl tracking-[0.3em] uppercase text-luxury-gold mb-12">
@@ -500,26 +500,52 @@ export default function AboutPage() {
       {/* 6. CREATIVE JOURNEY TIMELINE (Plotted Route) */}
       {/* ------------------------------------------------------------------------ */}
       <section className="w-full py-40 px-6 relative overflow-hidden bg-[#FAF8F5]">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="scroll-text-reveal font-serif text-4xl text-center text-luxury-burgundy mb-32 uppercase tracking-widest">The Plotted Route</h2>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="scroll-text-reveal font-serif text-4xl md:text-5xl text-center text-luxury-burgundy mb-32 uppercase tracking-widest">
+            The Plotted Route
+          </h2>
           
-          <div className="relative border-l border-luxury-gold/30 ml-4 md:mx-auto md:w-px">
+          <div className="relative w-full">
+            {/* Center Line for Desktop / Left Line for Mobile */}
+            <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-[1px] bg-luxury-gold/30 md:-translate-x-1/2" />
             
-            {[
-              { year: "2023–2026", title: "Bachelor's in Accounting and Finance (BAF)", org: "KC College, Mumbai" },
-              { year: "2024", title: "Certificate in CAD Jewellery Design", org: "JK Diamonds Institute" },
-              { year: "2024", title: "Professional Jewellery Designing (Manual)", org: "Gautam Banerjee's Academy" },
-              { year: "JAN 2025 — MAR 2025", title: "Jewellery Designer Internship", org: "The House of Silver Emporium" },
-              { year: "SEP 2025 — NOV 2025", title: "Jewellery Designer & Stylist Internship", org: "Zahairaa" },
-            ].map((item, index) => (
-              <div key={index} className="scroll-text-reveal relative pl-12 md:pl-0 mb-20 md:w-1/2 md:even:ml-auto md:odd:pr-16 md:even:pl-16 md:odd:text-right flex flex-col md:even:items-start md:odd:items-end">
-                <div className="absolute left-[-5px] md:left-auto md:odd:-right-[6px] md:even:-left-[6px] top-2 w-3 h-3 rounded-full bg-luxury-burgundy ring-4 ring-luxury-paper" />
+            <div className="flex flex-col space-y-16 md:space-y-24">
+              {[
+                { year: "2023–2026", title: "Bachelor's in Accounting and Finance (BAF)", org: "KC College, Mumbai" },
+                { year: "2024", title: "Certificate in CAD Jewellery Design", org: "JK Diamonds Institute" },
+                { year: "2024", title: "Professional Jewellery Designing (Manual)", org: "Gautam Banerjee's Academy" },
+                { year: "JAN 2025 — MAR 2025", title: "Jewellery Designer Internship", org: "The House of Silver Emporium" },
+                { year: "SEP 2025 — NOV 2025", title: "Jewellery Designer & Stylist Internship", org: "Zahairaa" },
+              ].map((item, index) => {
+                // Determine if item is on the left or right for Desktop
+                const isEven = index % 2 === 0; 
                 
-                <span className="font-sans text-xs tracking-[0.3em] text-luxury-gold uppercase mb-2">{item.year}</span>
-                <h3 className="font-serif text-2xl text-luxury-charcoal mb-2">{item.title}</h3>
-                <p className="font-sans text-sm uppercase tracking-wider text-luxury-charcoal/50">{item.org}</p>
-              </div>
-            ))}
+                return (
+                  <div key={index} className={`scroll-text-reveal relative flex flex-col md:flex-row justify-between items-start md:items-center w-full ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                    
+                    {/* The Dot Tracker */}
+                    <div className="absolute left-[15px] md:left-1/2 top-1.5 md:top-1/2 w-3 h-3 rounded-full bg-luxury-burgundy ring-4 ring-[#FAF8F5] -translate-x-1/2 md:-translate-y-1/2 z-10" />
+                    
+                    {/* Content Box */}
+                    <div className={`w-full pl-12 md:pl-0 md:w-[45%] flex flex-col ${isEven ? 'md:items-start md:text-left' : 'md:items-end md:text-right'}`}>
+                      <span className="font-sans text-[10px] tracking-[0.4em] text-luxury-gold uppercase mb-3 block">
+                        {item.year}
+                      </span>
+                      <h3 className="font-serif text-2xl md:text-3xl text-luxury-charcoal mb-3 leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] text-luxury-charcoal/50">
+                        {item.org}
+                      </p>
+                    </div>
+
+                    {/* Empty Space for the other side (Creates the center gap) */}
+                    <div className="hidden md:block w-[45%]" />
+                    
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

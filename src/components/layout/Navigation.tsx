@@ -39,7 +39,7 @@ export default function Navigation() {
         <img 
           src="/logo.png" 
           alt="Disha Bafna" 
-          className="h-12 md:h-16 w-auto object-contain drop-shadow-lg" 
+          className="h-20 md:h-28 lg:h-32 w-auto object-contain drop-shadow-lg transition-transform duration-500 hover:scale-105" 
         />
       </a>
 

@@ -162,53 +162,7 @@ export default function Home() {
         }
       });
 
-      // Interactive Assembly Animation (Lower down the page)
-      if (assemblyPinRef.current) {
-        const assemblyTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: assemblyPinRef.current,
-            start: "top top",
-            end: "+=250%",
-            scrub: 1.2,
-            pin: true
-          }
-        });
-
-        partsRef.current.forEach((part, i) => {
-          if (!part || !explodedParts[i]) return;
-          gsap.set(part, {
-            x: explodedParts[i].x,
-            y: explodedParts[i].y,
-            rotation: explodedParts[i].rot,
-            scale: explodedParts[i].scale, 
-            filter: `blur(${explodedParts[i].blur}px)`,
-            opacity: 0
-          });
-        });
-
-        assemblyTl
-          .to(sketchRef.current, { opacity: 0.6, duration: 1 })
-          .to(partsRef.current, { opacity: 1, stagger: 0.02, duration: 1 }, "<")
-          .to(partsRef.current, {
-            x: 0,
-            y: 0,
-            rotation: 0,
-            filter: "blur(0px)",
-            scale: (i) => explodedParts[i].scale, 
-            stagger: 0.05,
-            duration: 3,
-            ease: "power3.inOut"
-          })
-          .to(sketchRef.current, { opacity: 0.05, duration: 1 }, "-=1")
-          .to(finalPieceRef.current, { opacity: 1, duration: 1 }, "-=0.5")
-          .to(partsRef.current, { opacity: 0, duration: 0.5 }, "<")
-          .fromTo(lightSweepRef.current, 
-            { x: "-150%", opacity: 0 }, 
-            { x: "150%", opacity: 0.5, duration: 1.5, ease: "power1.inOut" }, 
-            "-=0.5"
-          )
-          .to(".assembly-annotation", { opacity: 1, y: 0, stagger: 0.15, duration: 0.8 }, "-=0.4");
-      }
+      
 
       gsap.to(".abstract-geo-line", {
         scaleY: 1,
@@ -300,40 +254,7 @@ export default function Home() {
     };
   }, [isExploded]);
 
-  const toggleExplodedView = () => {
-    const nextState = !isExploded;
-    setIsExploded(nextState);
-
-    if (nextState) {
-      gsap.to(finalPieceRef.current, { opacity: 0, duration: 0.4 });
-      gsap.to(sketchRef.current, { opacity: 0.6, duration: 0.6 });
-      
-      partsRef.current.forEach((part, i) => {
-        if (!part || !explodedParts[i]) return;
-        gsap.to(part, {
-          x: explodedParts[i].x,
-          y: explodedParts[i].y,
-          rotation: explodedParts[i].rot,
-          scale: explodedParts[i].scale,
-          filter: `blur(${explodedParts[i].blur}px)`,
-          opacity: 1,
-          duration: 1.2,
-          ease: "expo.out",
-          delay: i * 0.02
-        });
-      });
-      gsap.to(".assembly-annotation", { opacity: 0, duration: 0.3 });
-    } else {
-      partsRef.current.forEach((part, i) => {
-        if (!part || !explodedParts[i]) return;
-        gsap.to(part, { x: 0, y: 0, rotation: 0, scale: explodedParts[i].scale * 0.5, filter: "blur(0px)", duration: 1, ease: "power3.inOut" });
-      });
-      gsap.to(finalPieceRef.current, { opacity: 1, duration: 0.5, delay: 0.8 });
-      gsap.to(partsRef.current, { opacity: 0, duration: 0.5, delay: 0.8 });
-      gsap.to(sketchRef.current, { opacity: 0.05, duration: 0.6, delay: 0.5 });
-      gsap.to(".assembly-annotation", { opacity: 1, duration: 0.5, delay: 1 });
-    }
-  };
+  
 
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
@@ -432,108 +353,35 @@ export default function Home() {
       </section>
 
       <section className="w-full py-40 px-6 bg-[#F5F3EC] text-[#2A090D] relative overflow-hidden rounded-t-[3rem] -mt-12 z-30">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
-          <div className="w-full lg:w-1/2">
-            <h2 className="font-serif text-5xl md:text-7xl uppercase tracking-tighter leading-[0.9] mb-8">
-              Find<br/>Your<br/><span className="text-[#D4AF37]">North.</span>
+        <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-center justify-between">
+          
+          <div className="w-full lg:w-5/12 flex flex-col items-start text-left">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter leading-[0.9] mb-10">
+              Find Your<br />
+              <span className="text-[#D4AF37]">North.</span>
             </h2>
-            <p className="font-sans text-sm tracking-widest uppercase text-[#2A090D]/60 mb-6 max-w-md">
+            <p className="font-sans text-[10px] md:text-xs tracking-[0.2em] leading-loose uppercase text-[#2A090D]/70 mb-6 max-w-md">
               I am Disha, a jewellery designer driven by curiosity, craft, and the quiet search for personal narrative.
             </p>
-            <p className="font-sans text-sm tracking-widest uppercase text-[#2A090D]/60 mb-12 border-l border-[#D4AF37] pl-6 max-w-sm">
+            <p className="font-sans text-[10px] md:text-xs tracking-[0.2em] leading-loose uppercase text-[#2A090D]/70 mb-12 border-l border-[#D4AF37] pl-6 max-w-md">
               My name means direction. Every sketch, line, and gemstone placement represents a plotted course from imagination into physical form.
             </p>
           </div>
 
-          <div className="w-full lg:w-1/2 story-sequence-container relative h-[400px] flex items-center">
+          <div className="w-full lg:w-7/12 story-sequence-container relative h-[200px] lg:h-[400px] flex items-center pt-12 lg:pt-0">
+            {/* The Background Line */}
             <div className="absolute left-0 right-0 h-[1px] bg-[#2A090D]/10 top-1/2 -translate-y-1/2" />
+            {/* The Animated Gold Line */}
             <div className="story-line-fill absolute left-0 right-0 h-[1px] bg-[#D4AF37] top-1/2 -translate-y-1/2 scale-x-0" />
             
-            <div className="relative z-10 w-full flex justify-between items-center text-center font-sans text-[9px] md:text-xs tracking-[0.3em] uppercase font-bold text-[#2A090D]">
+            {/* The Nodes */}
+            <div className="relative z-10 w-full flex justify-between items-center font-sans text-[8px] md:text-[10px] tracking-[0.4em] uppercase text-[#2A090D]">
               {["Story", "Idea", "Sketch", "CAD", "Form", "Jewellery"].map((node) => (
-                <div key={node} className="story-node flex flex-col items-center bg-[#F5F3EC] px-2 md:px-4">
-                  <div className="w-2 h-2 rounded-full bg-[#2A090D] mb-4 shadow-[0_0_10px_rgba(212,175,55,0.5)]" />
-                  {node}
+                <div key={node} className="story-node flex flex-col items-center bg-[#F5F3EC] px-1 md:px-2 transform -translate-y-[2px]">
+                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#2A090D] mb-4 shadow-[0_0_10px_rgba(212,175,55,0.3)] transition-transform duration-300 hover:scale-150 hover:bg-[#D4AF37]" />
+                  <span className="opacity-70">{node}</span>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INTERACTIVE ASSEMBLY SECTION */}
-      <section ref={assemblyPinRef} className="relative w-full h-screen bg-[#2A090D] overflow-hidden border-t border-[#D4AF37]/10">
-        <div ref={assemblyTrackRef} className="relative w-full h-full flex flex-col items-center justify-center px-6">
-          
-          <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center">
-            <svg className="w-[120vw] h-[120vw] max-w-[900px]" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="#D4AF37" strokeWidth="0.06" />
-              <circle cx="50" cy="50" r="32" fill="none" stroke="#D4AF37" strokeWidth="0.04" strokeDasharray="1 2" />
-              <line x1="10" y1="50" x2="90" y2="50" stroke="#D4AF37" strokeWidth="0.04" />
-              <line x1="50" y1="10" x2="50" y2="90" stroke="#D4AF37" strokeWidth="0.04" />
-            </svg>
-          </div>
-
-          <div className="relative w-full max-w-4xl h-[62vh] flex items-center justify-center">
-            
-            <img 
-              ref={sketchRef}
-              src="/necklace-sketch.png" 
-              alt="Design progression"
-              className="absolute inset-0 w-full h-full object-contain opacity-0 mix-blend-screen transition-opacity duration-500 pointer-events-none filter contrast-125"
-            />
-
-            <div className="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center">
-              {explodedParts.map((comp, i) => (
-                <img 
-                  key={i}
-                  ref={(el) => { partsRef.current[i] = el; }}
-                  src={comp.src}
-                  alt="Jewellery Component"
-                  className="absolute w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-2xl"
-                  style={{ zIndex: comp.zIndex, mixBlendMode: comp.blend as any }}
-                />
-              ))}
-            </div>
-
-            <div className="relative w-full h-full max-w-[560px] flex items-center justify-center z-10">
-              <img 
-                ref={finalPieceRef}
-                src="/necklace-final.png" 
-                alt="Floral Symphony Necklace"
-                className="w-full h-full object-contain opacity-0 drop-shadow-2xl"
-              />
-              <div className="absolute inset-0 overflow-hidden mix-blend-overlay pointer-events-none rounded-full">
-                <div ref={lightSweepRef} className="w-[200%] h-[200%] bg-gradient-to-r from-transparent via-white to-transparent skew-x-[-45deg] opacity-0" />
-              </div>
-            </div>
-
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="assembly-annotation absolute top-[14%] left-[6%] opacity-0 translate-y-3">
-                <span className="block font-sans text-[9px] tracking-[0.3em] text-[#D4AF37] uppercase mb-1">Motif Study</span>
-                <span className="block font-serif italic text-sm text-[#F5F3EC]/80">Floral Asymmetry</span>
-              </div>
-              <div className="assembly-annotation absolute bottom-[18%] right-[6%] opacity-0 translate-y-3 text-right">
-                <span className="block font-sans text-[9px] tracking-[0.3em] text-[#D4AF37] uppercase mb-1">Stone Mapping</span>
-                <span className="block font-serif italic text-sm text-[#F5F3EC]/80">Graduated Pink Sapphires</span>
-                <div className="w-full h-[1px] bg-[#D4AF37]/30 mt-2" />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative z-30 flex flex-col items-center text-center mt-4">
-            <button 
-              onClick={toggleExplodedView}
-              data-cursor="CLICK"
-              className="assembly-annotation opacity-0 mb-6 font-sans text-[9px] tracking-[0.3em] uppercase text-[#F5F3EC] border border-[#D4AF37]/40 px-8 py-3 hover:bg-[#D4AF37] hover:text-[#2A090D] transition-colors duration-500"
-            >
-              {isExploded ? "Assemble Form" : "Explore Construction"}
-            </button>
-            <div className="assembly-annotation opacity-0">
-              <h3 className="font-serif text-2xl md:text-3xl text-[#F5F3EC] tracking-wide mb-2">Floral Symphony</h3>
-              <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-[#D4AF37]/70">
-                Manual ideation translated into fine jewellery setting.
-              </p>
             </div>
           </div>
 
@@ -552,7 +400,7 @@ export default function Home() {
             <h2 className="font-serif text-6xl md:text-8xl text-[#F5F3EC] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-700">
               Imagination<br/>As Freedom
             </h2>
-            <a href="/collections" onClick={(e) => handleNavigation(e, "/collections")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
+            <a href="/collections/freedom-to-dream" onClick={(e) => handleNavigation(e, "/collections/freedom-to-dream")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
               Explore Collection
             </a>
           </div>
@@ -571,12 +419,12 @@ export default function Home() {
                 Geometry<br/>In Motion
               </h2>
               <p className="font-sans text-[10px] tracking-widest uppercase text-[#F5F3EC]/50 mb-12">Metro, City Lines, Ticket Booths</p>
-              <a href="/collections" onClick={(e) => handleNavigation(e, "/collections")} className="font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
+              <a href="/collections/abstract-retro" onClick={(e) => handleNavigation(e, "/collections/abstract-retro")} className="font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
                 Explore Collection
               </a>
             </div>
             <div className="h-[40vh] bg-[#2A090D] border border-[#D4AF37]/20 p-4 relative">
-               <img src="/api/placeholder/600/800" alt="Abstract Jewellery" className="w-full h-full object-cover opacity-70 sepia-[0.3]" />
+               <img src="/theme2/temporal.png" alt="Abstract Jewellery" className="w-full h-full object-contain p-4 opacity-70" />
             </div>
           </div>
         </div>
@@ -591,12 +439,11 @@ export default function Home() {
                <h2 className="cult-fut absolute w-full font-serif text-6xl md:text-8xl text-[#F5F3EC] uppercase tracking-widest opacity-0 translate-y-10">Future</h2>
              </div>
              
-             <a href="/collections" onClick={(e) => handleNavigation(e, "/collections")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30 inline-block">
+             <a href="/collections/cultural-echoes" onClick={(e) => handleNavigation(e, "/collections/cultural-echoes")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30 inline-block">
                Explore Collection
              </a>
           </div>
         </div>
-
       </section>
 
       <section className="w-full py-40 px-6 bg-[#F5F3EC] text-[#2A090D] text-center flex flex-col items-center">
@@ -608,8 +455,15 @@ export default function Home() {
         </p>
 
         <div className="max-w-2xl text-center flex flex-col items-center">
-          <span className="font-sans text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase mb-4 font-bold block">Meet Disha</span>
-          <p className="font-serif italic text-2xl md:text-4xl text-[#2A090D]/80 mb-12">
+          <a 
+            href="/about" 
+            onClick={(e) => handleNavigation(e, "/about")} 
+            data-cursor="CLICK"
+            className="font-sans text-base md:text-xl tracking-[0.4em] text-[#D4AF37] hover:text-[#2A090D] uppercase mb-4 font-bold block transition-colors duration-500 cursor-pointer"
+          >
+            Meet Disha
+          </a>
+          <p className="font-serif italic text-xl md:text-2xl text-[#2A090D]/80 mb-12">
             Jewellery designer. Storyteller. Observer.
           </p>
           <a href="/about" onClick={(e) => handleNavigation(e, "/about")} className="group flex items-center space-x-4 font-sans text-[10px] tracking-[0.3em] uppercase text-[#2A090D] hover:text-[#D4AF37] transition-colors">
