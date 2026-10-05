@@ -35,7 +35,7 @@ const eightDirections = [
   {
     id: 3,
     title: "Travel",
-    emoji: "✈️",
+    emoji: "✈️️",
     angle: 45, // Bottom Right
     primaryText: "Travelling makes me feel curious, excited and free; I love discovering new places, cultures, colours and ways of life.",
     secondaryText: "As a jewellery designer, I take inspiration from these experiences and translate cultures, architecture, nature and traditions into my designs.",
@@ -90,13 +90,9 @@ const eightDirections = [
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Hero Compass Refs
-  const compassNeedleRef = useRef<HTMLDivElement>(null);
-  const compassRingRef = useRef<HTMLDivElement>(null);
 
   // EIGHT DIRECTIONS INTERACTIVE COMPASS REFS & STATE
-  const eightCompassNeedleRef = useRef<HTMLDivElement>(null);
+  const eightCompassNeedleRef = useRef<SVGGElement>(null);
   const eightCompassContainerRef = useRef<HTMLDivElement>(null);
   const [activeDirection, setActiveDirection] = useState<number | null>(null);
   const [isExplored, setIsExplored] = useState(false);
@@ -112,15 +108,7 @@ export default function AboutPage() {
         { y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power4.out" }
       );
 
-      // 2. Idle Compass Breathing & Ring Rotation (Hero)
-      gsap.to(compassRingRef.current, {
-        rotation: 360,
-        duration: 40,
-        repeat: -1,
-        ease: "none"
-      });
-
-      // 3. THE EIGHT DIRECTIONS INTRO (Cinematic Reveal)
+      // 2. THE EIGHT DIRECTIONS INTRO (Cinematic Reveal)
       gsap.fromTo(".eight-intro-text", 
         { opacity: 0, y: 20 }, 
         { 
@@ -137,7 +125,7 @@ export default function AboutPage() {
         }
       );
 
-      // 4. Staggered Text Animations on Scroll (General)
+      // 3. Staggered Text Animations on Scroll (General)
       const scrollTexts = gsap.utils.toArray(".scroll-text-reveal");
       scrollTexts.forEach((text: any) => {
         gsap.fromTo(
@@ -157,46 +145,9 @@ export default function AboutPage() {
         );
       });
 
-      // 5. Parallax Image Reveals (General)
-      const images = gsap.utils.toArray(".compass-image-mask");
-      images.forEach((img: any) => {
-        gsap.fromTo(
-          img,
-          { clipPath: "circle(0% at 50% 50%)" },
-          {
-            clipPath: "circle(50% at 50% 50%)",
-            duration: 1.5,
-            ease: "power3.inOut",
-            scrollTrigger: {
-              trigger: img,
-              start: "top 75%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
-
     }, containerRef);
 
-    // Interactive Magnetic Compass Needle (Mouse Tracking on Hero)
-    const rotateNeedle = gsap.quickTo(compassNeedleRef.current, "rotation", { duration: 0.5, ease: "power3.out" });
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!compassNeedleRef.current) return;
-      const rect = compassNeedleRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      
-      const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI) + 90;
-      rotateNeedle(angle);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      ctx.revert();
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => ctx.revert();
   }, []);
 
   // ------------------------------------------------------------------------
@@ -205,7 +156,7 @@ export default function AboutPage() {
   const handleDirectionHover = (id: number, angle: number) => {
     if (isExplored) return; // Freeze compass needle if a card is open
     setActiveDirection(id);
-    gsap.to(eightCompassNeedleRef.current, { rotation: angle + 90, duration: 0.6, ease: "back.out(1.5)" });
+    gsap.to(eightCompassNeedleRef.current, { rotation: angle + 90, duration: 0.6, ease: "back.out(1.5)", transformOrigin: "100px 100px" });
   };
 
   const handleDirectionLeave = () => {
@@ -239,7 +190,7 @@ export default function AboutPage() {
         
         {/* Left: Typography */}
         <div className="relative z-10 w-full lg:w-1/2 pt-20 lg:pt-0 flex flex-col justify-center">
-          <h1 className="hero-reveal font-serif text-5xl md:text-7xl lg:text-8xl leading-none text-luxury-burgundy uppercase tracking-tight mb-6">
+          <h1 className="hero-reveal font-serif text-7xl md:text-[9rem] lg:text-[11rem] leading-none text-luxury-burgundy uppercase tracking-tight mb-6">
             Disha
           </h1>
           <p className="hero-reveal font-sans text-lg md:text-xl tracking-[0.3em] uppercase text-luxury-gold mb-12">
@@ -250,48 +201,24 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Right: The Interactive Luxury Compass */}
-        <div className="relative w-full lg:w-1/2 h-[60vh] lg:h-screen flex items-center justify-center pointer-events-none mt-12 lg:mt-0">
-          <div className="relative w-[80vw] h-[80vw] max-w-[500px] max-h-[500px]">
-            
-            {/* Compass Rings */}
-            <div ref={compassRingRef} className="absolute inset-0 rounded-full border-[1px] border-luxury-gold/30 flex items-center justify-center shadow-[inset_0_0_60px_rgba(90,18,23,0.05)]">
-              <div className="w-[90%] h-[90%] rounded-full border-[1px] border-luxury-charcoal/10 border-dashed" />
-              <div className="absolute w-[80%] h-[80%] rounded-full border-[0.5px] border-luxury-burgundy/20 flex items-center justify-center">
-                <svg className="w-full h-full opacity-30" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="49" fill="none" stroke="currentColor" strokeWidth="0.2" strokeDasharray="1 3" />
-                </svg>
-              </div>
+        {/* Right: Disha Photo (Elegant Arch Frame) */}
+        <div className="relative w-full lg:w-1/2 h-[50vh] lg:h-screen flex items-center justify-center mt-12 lg:mt-0 z-20">
+          
+          <div className="hero-reveal relative w-[70vw] h-[90vw] max-w-[380px] max-h-[500px] rounded-t-full overflow-hidden border border-luxury-gold/30 shadow-2xl bg-luxury-paper p-2">
+            <div className="relative w-full h-full rounded-t-full overflow-hidden border border-luxury-gold/20 flex items-center justify-center bg-luxury-burgundy/5">
+               {/* Change this src to your actual photo name once you have it */}
+               <img 
+                 src="/disha-portrait.jpg" 
+                 alt="Disha Bafna" 
+                 className="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-[2s] hover:scale-105"
+               />
+               {/* This text just shows until you put your real photo in! */}
+               <span className="font-serif italic text-luxury-burgundy/30 absolute -z-10 text-xl">
+                 Portrait Image
+               </span>
             </div>
-
-            {/* Cardinal Directions */}
-            <div className="absolute inset-0 flex items-center justify-center font-serif text-luxury-burgundy text-xl">
-              <span className="absolute top-2 left-1/2 -translate-x-1/2">N</span>
-              <span className="absolute bottom-2 left-1/2 -translate-x-1/2">S</span>
-              <span className="absolute right-4 top-1/2 -translate-y-1/2">E</span>
-              <span className="absolute left-4 top-1/2 -translate-y-1/2">W</span>
-            </div>
-            
-            {/* Hover Direction Labels */}
-            <div className="absolute inset-0 font-sans text-[0.6rem] tracking-[0.4em] text-luxury-gold uppercase opacity-60">
-              <span className="absolute top-10 left-1/2 -translate-x-1/2">Vision</span>
-              <span className="absolute bottom-10 left-1/2 -translate-x-1/2">Craft</span>
-              <span className="absolute right-12 top-1/2 -translate-y-1/2 origin-left -rotate-90">Curiosity</span>
-              <span className="absolute left-10 top-1/2 -translate-y-1/2 origin-right rotate-90">Story</span>
-            </div>
-
-            {/* The Needle */}
-            <div className="absolute inset-0 flex items-center justify-center z-20">
-              <div ref={compassNeedleRef} className="relative w-8 h-[70%]">
-                <svg viewBox="0 0 100 200" className="w-full h-full drop-shadow-xl overflow-visible">
-                  <polygon points="50,0 60,100 50,110 40,100" fill="#5A1217" />
-                  <polygon points="50,200 60,100 50,110 40,100" fill="#D4AF37" />
-                  <circle cx="50" cy="105" r="8" fill="#F5F3EC" stroke="#5A1217" strokeWidth="2" />
-                </svg>
-              </div>
-            </div>
-
           </div>
+          
         </div>
       </section>
 
@@ -301,11 +228,11 @@ export default function AboutPage() {
       <section className="eight-intro-section w-full min-h-[50vh] bg-[#FAF8F5] flex flex-col items-center justify-center text-center px-6 transition-colors duration-1000 relative overflow-hidden border-t border-luxury-gold/20">
         <div className="w-[1px] h-24 bg-luxury-burgundy mb-12 origin-top scale-y-0 animate-[scaleY_1s_ease-out_forwards]" />
         
-        <h2 className="font-serif text-5xl md:text-8xl lg:text-9xl text-luxury-burgundy uppercase tracking-tighter leading-[0.85] flex flex-col">
+        <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-luxury-burgundy uppercase tracking-widest leading-[1.1] flex flex-col items-center">
           <span className="eight-intro-text">The</span>
-          <span className="eight-intro-text ml-8 md:ml-16">Eight</span>
-          <span className="eight-intro-text ml-16 md:ml-32">Directions</span>
-          <span className="eight-intro-text text-luxury-gold italic">Of Me</span>
+          <span className="eight-intro-text">Eight</span>
+          <span className="eight-intro-text">Directions</span>
+          <span className="eight-intro-text text-luxury-gold italic mt-2">Of Me</span>
         </h2>
 
         <p className="eight-intro-text font-sans text-xs md:text-sm tracking-[0.3em] uppercase text-luxury-charcoal/60 mt-16 max-w-lg border-l border-luxury-gold/50 pl-6">
@@ -326,34 +253,52 @@ export default function AboutPage() {
         {/* The Main Compass Ring & Nodes */}
         <div ref={eightCompassContainerRef} className="relative w-[90vw] h-[90vw] md:w-[70vh] md:h-[70vh] max-w-[700px] max-h-[700px]">
           
-          {/* Connecting lines drawing from center */}
-          <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#5A1217" strokeWidth="0.1" />
-            <line x1="5" y1="50" x2="95" y2="50" stroke="#5A1217" strokeWidth="0.1" />
-            <line x1="50" y1="5" x2="50" y2="95" stroke="#5A1217" strokeWidth="0.1" />
-            <line x1="18" y1="18" x2="82" y2="82" stroke="#5A1217" strokeWidth="0.1" />
-            <line x1="18" y1="82" x2="82" y2="18" stroke="#5A1217" strokeWidth="0.1" />
+          {/* HIGH-END LUXURY COMPASS BACKGROUND */}
+          <svg className="absolute inset-0 w-full h-full opacity-40 pointer-events-none overflow-visible" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="98" fill="none" stroke="#D4AF37" strokeWidth="0.2" opacity="0.6" />
+            <circle cx="100" cy="100" r="95" fill="none" stroke="#2A090D" strokeWidth="0.2" strokeDasharray="1 3" opacity="0.4" />
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#5A1217" strokeWidth="0.2" opacity="0.3" />
+            <circle cx="100" cy="100" r="45" fill="none" stroke="#D4AF37" strokeWidth="0.1" opacity="0.3" strokeDasharray="0.5 2" />
+            <g opacity="0.5">
+              {[...Array(72)].map((_, i) => (
+                <line key={`tick-${i}`} x1="100" y1="2" x2="100" y2={i % 9 === 0 ? "8" : i % 2 === 0 ? "5" : "3"} stroke={i % 9 === 0 ? "#5A1217" : "#D4AF37"} strokeWidth={i % 9 === 0 ? "0.3" : "0.1"} transform={`rotate(${i * 5} 100 100)`} />
+              ))}
+            </g>
+            <g stroke="#5A1217" strokeWidth="0.1" opacity="0.3">
+              <line x1="10" y1="100" x2="190" y2="100" strokeDasharray="1 2" />
+              <line x1="100" y1="10" x2="100" y2="190" strokeDasharray="1 2" />
+              <line x1="36.3" y1="36.3" x2="163.7" y2="163.7" strokeDasharray="1 2" />
+              <line x1="36.3" y1="163.7" x2="163.7" y2="36.3" strokeDasharray="1 2" />
+            </g>
           </svg>
 
           {/* Center Title (Disha) */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-20 pointer-events-none">
-            <span className="font-serif text-3xl md:text-4xl text-luxury-burgundy uppercase tracking-widest bg-[#FAF8F5] px-6 py-3 border border-luxury-gold/30 rounded-full shadow-sm">
+            <span className="font-serif text-3xl md:text-4xl text-luxury-burgundy uppercase tracking-widest bg-[#FAF8F5] px-8 py-4 border border-luxury-gold/40 rounded-full shadow-[0_5px_15px_rgba(90,18,23,0.1)]">
               Disha
             </span>
           </div>
 
-          {/* Dynamic Needle pointing to hovered item */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-40">
-            <div ref={eightCompassNeedleRef} className="relative w-1 h-[90%] transition-transform">
-               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-1/2 bg-luxury-burgundy" />
-               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-1/2 bg-luxury-gold" />
-            </div>
+          {/* Mechanical Needle pointing to hovered item */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-80">
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl overflow-visible">
+              <g ref={eightCompassNeedleRef} className="origin-center" style={{ transformOrigin: "100px 100px" }}>
+                <polygon points="98,15 102,15 105,100 95,100" fill="#5A1217" />
+                <polygon points="98,15 102,15 100,100" fill="#3D0C0F" /> 
+                <polygon points="99,180 101,180 103,100 97,100" fill="#D4AF37" />
+                <circle cx="100" cy="100" r="14" fill="#FAF8F5" stroke="#D4AF37" strokeWidth="1" />
+                <circle cx="100" cy="100" r="8" fill="#5A1217" />
+                <circle cx="101" cy="99" r="2" fill="#FFFFFF" opacity="0.6" /> 
+              </g>
+            </svg>
           </div>
 
           {/* Placed Nodes (Hover/Click triggers) */}
           {eightDirections.map((dir) => {
-            const radians = (dir.angle - 90) * (Math.PI / 180);
-            const radius = 46; // Distance from center
+            // FIX THE MATH: An angle of -90 mathematically maps directly to the top-center (12 o'clock).
+            const radians = (dir.angle) * (Math.PI / 180);
+            const radius = 48; // Distance from center
+            
             const x = 50 + radius * Math.cos(radians);
             const y = 50 + radius * Math.sin(radians);
             const isActive = activeDirection === dir.id;
@@ -370,19 +315,19 @@ export default function AboutPage() {
               >
                 <div className={cn(
                   "flex flex-col items-center justify-center transition-all duration-500",
-                  isActive ? "scale-125 opacity-100" : "opacity-60 hover:opacity-100 scale-100",
+                  isActive ? "scale-125 opacity-100" : "opacity-70 hover:opacity-100 scale-100",
                   isExplored && !isActive && "opacity-0 pointer-events-none" // Hide others when one is open
                 )}>
                   <span className="text-3xl mb-2 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110 drop-shadow-md">
                     {dir.emoji}
                   </span>
-                  <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-luxury-charcoal bg-[#FAF8F5]/90 px-3 py-1.5 border border-luxury-gold/20 rounded shadow-sm whitespace-nowrap">
+                  <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-luxury-charcoal bg-[#FAF8F5]/90 px-3 py-1.5 border border-luxury-gold/30 rounded shadow-sm whitespace-nowrap">
                     0{dir.id} — {dir.title}
                   </span>
                   {/* Glowing dot linking to center */}
                   <div className={cn(
-                    "mt-3 w-1.5 h-1.5 rounded-full transition-all duration-300",
-                    isActive ? "bg-luxury-burgundy shadow-[0_0_12px_rgba(90,18,23,0.6)] scale-150" : "bg-luxury-gold/50"
+                    "mt-3 w-2 h-2 rounded-full transition-all duration-300 border border-white",
+                    isActive ? "bg-luxury-burgundy shadow-[0_0_12px_rgba(90,18,23,0.8)] scale-150" : "bg-luxury-gold"
                   )} />
                 </div>
               </div>
@@ -436,70 +381,9 @@ export default function AboutPage() {
       </section>
 
       {/* ------------------------------------------------------------------------ */}
-      {/* 4. FINAL SUMMARY */}
+      {/* 4. CREATIVE JOURNEY TIMELINE (Plotted Route) */}
       {/* ------------------------------------------------------------------------ */}
-      <section className="w-full h-screen bg-luxury-burgundy text-luxury-paper flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-        {/* Faint connecting lines drawing to center */}
-        <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" strokeWidth="0.1" />
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
-            <line 
-              key={angle}
-              x1="50" y1="50" 
-              x2={50 + 45 * Math.cos(angle * Math.PI / 180)} 
-              y2={50 + 45 * Math.sin(angle * Math.PI / 180)} 
-              stroke="#D4AF37" strokeWidth="0.1" strokeDasharray="1 1" 
-            />
-          ))}
-        </svg>
-
-        <h2 className="scroll-text-reveal font-serif text-7xl md:text-9xl tracking-tighter uppercase mb-8 relative z-10">
-          Disha
-        </h2>
-        <div className="scroll-text-reveal flex flex-col items-center space-y-4 relative z-10">
-          <span className="font-sans text-xs tracking-[0.5em] uppercase text-luxury-paper/50">Eight Directions.</span>
-          <div className="w-[1px] h-12 bg-luxury-gold/50" />
-          <span className="font-sans text-sm tracking-[0.4em] uppercase text-luxury-gold">One Creative Direction.</span>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------------ */}
-      {/* 5. PERSONAL INTRO (Circular Editorial Layout) */}
-      {/* ------------------------------------------------------------------------ */}
-      <section className="w-full py-32 px-6 md:px-12 lg:px-24 bg-luxury-paper border-t border-luxury-gold/20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          
-          <div className="order-2 lg:order-1 flex justify-center">
-            <div className="compass-image-mask relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] rounded-full overflow-hidden border border-luxury-gold/30 p-4" data-cursor="VIEW">
-              <div className="w-full h-full rounded-full bg-luxury-burgundy/10 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-luxury-charcoal/5" />
-                <span className="font-serif text-luxury-burgundy/30 text-2xl italic">Portrait</span>
-              </div>
-              <svg className="absolute inset-0 w-full h-full animate-[spin_60s_linear_infinite] opacity-30" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="49" fill="none" stroke="#D4AF37" strokeWidth="0.5" strokeDasharray="4 4" />
-              </svg>
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2">
-            <h2 className="scroll-text-reveal font-sans text-sm tracking-[0.5em] text-luxury-gold uppercase mb-8">
-              Hi, I'm Disha.
-            </h2>
-            <p className="scroll-text-reveal font-serif text-3xl md:text-5xl leading-tight text-luxury-burgundy mb-8">
-              A jewellery designer who believes every piece tells a story.
-            </p>
-            <p className="scroll-text-reveal font-sans text-lg text-luxury-charcoal/70 leading-relaxed font-light max-w-xl">
-              I focus on turning those stories into beautiful, wearable jewellery through precise CAD and manual design, grounded in thoughtful craftsmanship.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------------ */}
-      {/* 6. CREATIVE JOURNEY TIMELINE (Plotted Route) */}
-      {/* ------------------------------------------------------------------------ */}
-      <section className="w-full py-40 px-6 relative overflow-hidden bg-[#FAF8F5]">
+      <section className="w-full py-40 px-6 relative overflow-hidden bg-[#FAF8F5] border-t border-luxury-gold/10">
         <div className="max-w-5xl mx-auto">
           <h2 className="scroll-text-reveal font-serif text-4xl md:text-5xl text-center text-luxury-burgundy mb-32 uppercase tracking-widest">
             The Plotted Route
@@ -551,7 +435,7 @@ export default function AboutPage() {
       </section>
 
       {/* ------------------------------------------------------------------------ */}
-      {/* 7. DESTINATION (CTA) */}
+      {/* 5. DESTINATION (CTA) */}
       {/* ------------------------------------------------------------------------ */}
       <section className="w-full h-[60vh] flex flex-col items-center justify-center text-center px-6 relative bg-luxury-paper border-t border-luxury-gold/10">
         <div className="w-[1px] h-32 bg-luxury-gold/50 mb-12" />

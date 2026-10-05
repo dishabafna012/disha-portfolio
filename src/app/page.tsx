@@ -388,61 +388,81 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full bg-[#1A0507]">
-        <div className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden group border-b border-[#D4AF37]/10" data-cursor="EXPLORE">
-          <img src="/api/placeholder/1920/1080" alt="Freedom to Dream" className="absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-[2s] group-hover:scale-105 group-hover:opacity-50 blur-sm group-hover:blur-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A0507] via-transparent to-transparent" />
+      {/* HORIZONTAL COLLECTIONS GRID */}
+      <section className="w-full py-32 px-6 md:px-12 bg-[#1A0507]">
+        <div className="max-w-[1600px] mx-auto">
           
-          <div className="relative z-10 text-center flex flex-col items-center">
-            <span className="font-sans text-xs tracking-[0.5em] text-[#D4AF37] uppercase mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-4 group-hover:translate-y-0">
-              01: Freedom To Dream
-            </span>
-            <h2 className="font-serif text-6xl md:text-8xl text-[#F5F3EC] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-700">
-              Imagination<br/>As Freedom
-            </h2>
-            <a href="/collections/freedom-to-dream" onClick={(e) => handleNavigation(e, "/collections/freedom-to-dream")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
-              Explore Collection
+          <div className="text-center mb-24">
+            <span className="font-sans text-[10px] tracking-[0.6em] text-[#D4AF37] uppercase mb-4 block">The Portfolio</span>
+            <h2 className="font-serif text-4xl md:text-6xl text-[#F5F3EC] uppercase tracking-widest">Three Distinct Worlds</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            {/* Collection 01 */}
+            <a 
+              href="/collections/freedom-to-dream" 
+              onClick={(e) => handleNavigation(e, "/collections/freedom-to-dream")}
+              data-cursor="EXPLORE"
+              className="group relative flex flex-col items-center text-center bg-[#2A090D] border border-[#D4AF37]/20 p-8 md:p-12 hover:border-[#D4AF37]/60 transition-all duration-700 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-[#F5F3EC]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              <div className="w-full aspect-[4/5] bg-[#1A0507] border border-[#D4AF37]/10 flex items-center justify-center mb-8 relative overflow-hidden">
+                {/* Floating Image using one of the final pieces you added */}
+                <img src="/theme1/wings.png" alt="Freedom to Dream" className="absolute w-[80%] h-[80%] object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-1000" />
+              </div>
+              <span className="font-sans text-[9px] tracking-[0.4em] text-[#D4AF37] uppercase mb-3">Collection 01</span>
+              <h3 className="font-serif text-2xl md:text-3xl text-[#F5F3EC] uppercase tracking-widest mb-4">Freedom to<br/>Dream</h3>
+              <p className="font-sans text-[9px] tracking-widest leading-loose uppercase text-[#F5F3EC]/50 max-w-xs">
+                Soft forms, imagination, and a quiet escape from reality.
+              </p>
+            </a>
+
+            {/* Collection 02 */}
+            <a 
+              href="/collections/abstract-retro" 
+              onClick={(e) => handleNavigation(e, "/collections/abstract-retro")}
+              data-cursor="EXPLORE"
+              className="group relative flex flex-col items-center text-center bg-[#2A090D] border border-[#D4AF37]/20 p-8 md:p-12 hover:border-[#D4AF37]/60 transition-all duration-700 overflow-hidden md:translate-y-12"
+            >
+              <div className="absolute inset-0 bg-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              <div className="w-full aspect-[4/5] bg-[#1A0507] border border-[#D4AF37]/10 flex items-center justify-center mb-8 relative overflow-hidden">
+                <img src="/theme2/temporal.png" alt="Abstract Retro" className="absolute w-[80%] h-[80%] object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-1000" />
+              </div>
+              <span className="font-sans text-[9px] tracking-[0.4em] text-[#D4AF37] uppercase mb-3">Collection 02</span>
+              <h3 className="font-serif text-2xl md:text-3xl text-[#F5F3EC] uppercase tracking-widest mb-4">Abstract &<br/>Retro</h3>
+              <p className="font-sans text-[9px] tracking-widest leading-loose uppercase text-[#F5F3EC]/50 max-w-xs">
+                City movement, geometry, and bold architectural lines.
+              </p>
+            </a>
+
+            {/* Collection 03 */}
+            <a 
+              href="/collections/cultural-echoes" 
+              onClick={(e) => handleNavigation(e, "/collections/cultural-echoes")}
+              data-cursor="EXPLORE"
+              className="group relative flex flex-col items-center text-center bg-[#2A090D] border border-[#D4AF37]/20 p-8 md:p-12 hover:border-[#D4AF37]/60 transition-all duration-700 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-[#0F4C81]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              <div className="w-full aspect-[4/5] bg-[#1A0507] border border-[#D4AF37]/10 flex items-center justify-center mb-8 relative overflow-hidden">
+                <img src="/theme3/regal-unfolding.png" alt="Cultural Echoes" className="absolute w-[80%] h-[80%] object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-1000" />
+              </div>
+              <span className="font-sans text-[9px] tracking-[0.4em] text-[#D4AF37] uppercase mb-3">Collection 03</span>
+              <h3 className="font-serif text-2xl md:text-3xl text-[#F5F3EC] uppercase tracking-widest mb-4">Cultural<br/>Echoes</h3>
+              <p className="font-sans text-[9px] tracking-widest leading-loose uppercase text-[#F5F3EC]/50 max-w-xs">
+                Traditional heritage evolving into a modern future.
+              </p>
+            </a>
+
+          </div>
+
+          {/* Optional CTA to view all collections */}
+          <div className="w-full flex justify-center mt-24">
+            <a href="/collections" onClick={(e) => handleNavigation(e, "/collections")} className="font-sans text-[10px] tracking-[0.4em] uppercase text-[#D4AF37] border-b border-[#D4AF37]/30 pb-1 hover:text-[#F5F3EC] transition-colors duration-300">
+              View All Works
             </a>
           </div>
-        </div>
 
-        <div className="collection-abstract relative w-full h-[80vh] flex items-center justify-center overflow-hidden border-b border-[#D4AF37]/10">
-          <div className="absolute inset-0 flex space-x-12 opacity-10 justify-center">
-            {[...Array(10)].map((_, i) => (
-              <div key={i} className="abstract-geo-line w-[1px] h-full bg-[#D4AF37] origin-top scale-y-0" />
-            ))}
-          </div>
-          <div className="relative z-10 max-w-4xl px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="font-sans text-xs tracking-[0.5em] text-[#D4AF37] uppercase mb-4 block">02: Abstract & Retro</span>
-              <h2 className="font-serif text-5xl md:text-7xl text-[#F5F3EC] uppercase tracking-widest mb-8 leading-none">
-                Geometry<br/>In Motion
-              </h2>
-              <p className="font-sans text-[10px] tracking-widest uppercase text-[#F5F3EC]/50 mb-12">Metro, City Lines, Ticket Booths</p>
-              <a href="/collections/abstract-retro" onClick={(e) => handleNavigation(e, "/collections/abstract-retro")} className="font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30">
-                Explore Collection
-              </a>
-            </div>
-            <div className="h-[40vh] bg-[#2A090D] border border-[#D4AF37]/20 p-4 relative">
-               <img src="/theme2/temporal.png" alt="Abstract Jewellery" className="w-full h-full object-contain p-4 opacity-70" />
-            </div>
-          </div>
-        </div>
-
-        <div className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
-          <div className="relative z-10 text-center">
-             <span className="font-sans text-xs tracking-[0.5em] text-[#D4AF37] uppercase mb-12 block">03: Cultural Echoes</span>
-             
-             <div className="cultural-text-sequence h-24 relative overflow-hidden mb-8">
-               <h2 className="cult-trad absolute w-full font-serif text-6xl md:text-8xl text-[#D4AF37]/30 uppercase tracking-widest">Tradition</h2>
-               <h2 className="cult-mod absolute w-full font-serif text-6xl md:text-8xl text-[#D4AF37]/70 uppercase tracking-widest opacity-0 translate-y-10">Modern</h2>
-               <h2 className="cult-fut absolute w-full font-serif text-6xl md:text-8xl text-[#F5F3EC] uppercase tracking-widest opacity-0 translate-y-10">Future</h2>
-             </div>
-             
-             <a href="/collections/cultural-echoes" onClick={(e) => handleNavigation(e, "/collections/cultural-echoes")} className="mt-12 font-sans text-[10px] tracking-[0.4em] uppercase text-[#F5F3EC]/50 hover:text-[#D4AF37] transition-colors pb-1 border-b border-[#D4AF37]/30 inline-block">
-               Explore Collection
-             </a>
-          </div>
         </div>
       </section>
 
@@ -492,25 +512,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full py-32 px-6 bg-[#1A0507]">
-        <h2 className="text-center font-sans text-[10px] tracking-[0.5em] text-[#D4AF37] uppercase mb-24">From Thought To Form</h2>
-        
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
-          {[
-            { num: "01", title: "Ideation", img: "/necklace-sketch.png" },
-            { num: "02", title: "Development", img: "/api/placeholder/600/800" },
-            { num: "03", title: "Final Form", img: "/necklace-final.png" }
-          ].map((step, i) => (
-            <div key={i} className="flex flex-col border border-[#D4AF37]/10 p-6 hover:bg-[#2A090D] transition-colors duration-500">
-               <span className="font-serif text-4xl text-[#D4AF37]/30 mb-6">{step.num}</span>
-               <div className="h-[40vh] w-full bg-[#2A090D] mb-6 overflow-hidden flex items-center justify-center p-4">
-                 <img src={step.img} alt={step.title} className="w-full h-full object-contain opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-700" />
-               </div>
-               <h3 className="font-sans text-sm tracking-[0.3em] uppercase text-[#F5F3EC]">{step.title}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
+       
 
       <section className="final-section relative w-full min-h-screen bg-[#2A090D] flex flex-col items-center justify-center text-center px-6 border-t border-[#D4AF37]/10">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')] opacity-10 pointer-events-none mix-blend-overlay" />
